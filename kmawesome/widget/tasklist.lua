@@ -1,3 +1,5 @@
+-- Modified version of awful.widget.tasklist for kmawesome
+-- Original information:
 ---------------------------------------------------------------------------
 -- @author Julien Danjou &lt;julien@danjou.info&gt;
 -- @copyright 2008-2009 Julien Danjou
@@ -100,7 +102,7 @@ local function widget_tasklist_label_common(c, args)
        if c:tags()[1] == tags[i] then
           local j
           if i == 10 then j = 0 else j = i end
-          name = j .. ': ' .. name
+          name = '[' .. j .. '] ' .. name
           break
        end
     end

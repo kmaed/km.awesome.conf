@@ -1,3 +1,6 @@
+-- kmawesome: My configuration of awesome window manager
+-- Copyright (c) 2012 Kazuki Maeda <kmaeda@users.sourceforge.jp>
+
 require('awful')
 require('awful.autofocus')
 require('awful.rules')
@@ -176,7 +179,6 @@ local globalkeys = awful.util.table.join(
    awful.key({modkey, shiftkey}, 'n', function () awful.client.swap.byidx(1) end),
    awful.key({modkey, shiftkey}, 'p', function () awful.client.swap.byidx(-1) end),
 
-   awful.key({modkey, controlkey}, 'a', function () awful.util.spawn('audacious') end),
    awful.key({modkey, controlkey}, 'b', function () awful.util.spawn('audtool playlist-advance') end),
    awful.key({modkey, controlkey}, 'c', function () awful.util.spawn('audtool playlist-clear') end),
    awful.key({modkey, controlkey}, 'e', function () tagtoggle(11); launchprogram(editor, 11) end),
