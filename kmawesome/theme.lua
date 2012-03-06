@@ -3,12 +3,14 @@ theme.wallpaper_cmd = { "" }
 
 theme.font      = "M+ 1c bold 8"
 
-theme.fg_normal = "#838383"
-theme.fg_focus  = "#d3d7cf"
-theme.fg_urgent = "#CC9393"
-theme.bg_normal = "#3f403d"
-theme.bg_focus  = "#555753"
-theme.bg_urgent = "#3F3F3F"
+theme.fg_normal    = "#838383"
+theme.fg_selected  = "#d3d7cf"
+theme.fg_focus     = "#fad43a"
+theme.fg_urgent    = "#CC9393"
+theme.bg_normal    = "#3f403d"
+theme.bg_selected  = "#555753"
+theme.bg_focus     = "#555753"
+theme.bg_urgent    = "#3F3F3F"
 
 theme.border_width  = "0"
 theme.border_normal = "#3f403d"

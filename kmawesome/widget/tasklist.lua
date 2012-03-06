@@ -88,20 +88,13 @@ local function widget_tasklist_label_common(c, args)
     local theme = beautiful.get()
     local fg_focus = args.fg_focus or theme.tasklist_fg_focus or theme.fg_focus
     local bg_focus = args.bg_focus or theme.tasklist_bg_focus or theme.bg_focus
-    local fg_urgent = args.fg_urgent or theme.tasklist_fg_urgent or theme.fg_urgent
-    local bg_urgent = args.bg_urgent or theme.tasklist_bg_urgent or theme.bg_urgent
-    local fg_minimize = args.fg_minimize or theme.tasklist_fg_minimize or theme.fg_minimize
-    local bg_minimize = args.bg_minimize or theme.tasklist_bg_minimize or theme.bg_minimize
-    local floating_icon = args.floating_icon or theme.tasklist_floating_icon
+    local fg_selected = args.fg_selected or theme.tasklist_fg_selected or theme.fg_selected
+    local bg_selected = args.bg_selected or theme.tasklist_bg_selected or theme.bg_selected
     local font = args.font or theme.tasklist_font or theme.font or ""
     local bg = nil
     local text = "<span font_desc='"..font.."'>"
     local tags = capi.screen[1]:tags()
     local name
-    local status_image
-    if client.floating.get(c) and floating_icon then
-        status_image = capi.image(floating_icon)
-    end
     name = util.escape(c.name) or util.escape("<untitled>")
     for i = 1, 10 do
        if c:tags()[1] == tags[i] then
@@ -111,19 +104,15 @@ local function widget_tasklist_label_common(c, args)
           break
        end
     end
-    if capi.client.focus == c then
-        bg = bg_focus
-        if fg_focus then
-            text = text .. "<span color='"..util.color_strip_alpha(fg_focus).."'>"..name.."</span>"
+    if c:tags()[1].selected then
+        bg = bg_selected
+        if capi.client.focus == c and fg_focus then
+           text = text .. "<span color='"..util.color_strip_alpha(fg_focus).."'>"..name.."</span>"
+        elseif fg_selected then
+           text = text .. "<span color='"..util.color_strip_alpha(fg_selected).."'>"..name.."</span>"
         else
-            text = text .. name
+           text = text .. name
         end
-    elseif c.urgent and fg_urgent then
-        bg = bg_urgent
-        text = text .. "<span color='"..util.color_strip_alpha(fg_urgent).."'>"..name.."</span>"
-    elseif c.minimized and fg_minimize and bg_minimize then
-        bg = bg_minimize
-        text = text .. "<span color='"..util.color_strip_alpha(fg_minimize).."'>"..name.."</span>"
     else
         text = text .. name
     end

@@ -17,7 +17,7 @@ local shiftkey = 'Shift'
 local controlkey = 'Control'
 
 local terminal = 'evilvte'
-local editor = 'emacs'
+local editor = 'sh -c "XMODIFIERS=@im=none emacs"'
 local webbrowser = 'firefox'
 local mua = 'sylpheed'
 local musicplayer = 'audacious'
@@ -53,6 +53,13 @@ local function tagtoggle(tagnum)
    else
       awful.tag.viewtoggle(tags[tagnum])
    end
+end
+
+local function tagviewonly(tagnum)
+   for i = 1, 10 do
+      tags[i].selected = false
+   end
+   tags[tagnum].selected = true
 end
 
 local autorun = {
@@ -193,7 +200,7 @@ for i = 0, 9 do
    local j
    if i == 0 then j = 10 else j = i end
    globalkeys = awful.util.table.join(globalkeys,
-                                      awful.key({modkey}, tostring(i), function () awful.tag.viewonly(tags[j]) end),
+                                      awful.key({modkey}, tostring(i), function () tagviewonly(j) end),
                                       awful.key({modkey, controlkey}, tostring(i), function () awful.tag.viewtoggle(tags[j]) end),
                                       awful.key({modkey, shiftkey}, tostring(i),
                                                 function ()
