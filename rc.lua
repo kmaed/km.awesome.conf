@@ -236,9 +236,11 @@ awful.rules.rules = {
    { rule = { class = "Firefox" },
      properties = { tag = tags[12] } },
    { rule = { class = "Sylpheed" },
-     properties = { tag = tags[13]} },
+     properties = { tag = tags[13] } },
    { rule = { class = "Audacious" },
-     properties = { tag = tags[14]} },
+     properties = { tag = tags[14] } },
+   { rule = { class = "fontforge" },
+     properties = { floating = true } },
 }
 
 
