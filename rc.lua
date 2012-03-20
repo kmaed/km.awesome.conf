@@ -211,7 +211,10 @@ for i = 0, 9 do
                                                       and client.focus:tags()[1] ~= tags[12]
                                                       and client.focus:tags()[1] ~= tags[13]
                                                       and client.focus:tags()[1] ~= tags[14] then
+                                                      local focus = client.focus
                                                       awful.client.movetotag(tags[j])
+                                                      tags[j].selected = true
+                                                      client.focus = focus
                                                    end
                                                 end))
 end
