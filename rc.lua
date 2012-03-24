@@ -268,6 +268,10 @@ client.add_signal("manage",
                         c:raise()
                      end
 
+                     if c:tags()[1] == tags[12] and #tags[12]:clients() > 1 then
+                        awful.client.floating.set(c, true)
+                     end
+
                      awful.client.setslave(c)
                      if not c.size_hints.user_position and not c.size_hints.program_position then
                         awful.placement.no_overlap(c)
