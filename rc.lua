@@ -63,6 +63,22 @@ local function tagviewonly(tagnum)
       tags[i].selected = false
    end
    tags[tagnum].selected = true
+   if #tags[tagnum]:clients() > 0 then
+      client.focus = tags[tagnum]:clients()[1]
+   end
+end
+
+local function movetotag(tagnum)
+   if client.focus
+      and client.focus:tags()[1] ~= tags[11]
+      and client.focus:tags()[1] ~= tags[12]
+      and client.focus:tags()[1] ~= tags[13]
+      and client.focus:tags()[1] ~= tags[14] then
+      local focus = client.focus
+      awful.client.movetotag(tags[tagnum])
+      tags[tagnum].selected = true
+      client.focus = focus
+   end
 end
 
 local autorun = {
@@ -204,19 +220,7 @@ for i = 0, 9 do
    globalkeys = awful.util.table.join(globalkeys,
                                       awful.key({modkey}, tostring(i), function () tagviewonly(j) end),
                                       awful.key({modkey, controlkey}, tostring(i), function () awful.tag.viewtoggle(tags[j]) end),
-                                      awful.key({modkey, shiftkey}, tostring(i),
-                                                function ()
-                                                   if client.focus
-                                                      and client.focus:tags()[1] ~= tags[11]
-                                                      and client.focus:tags()[1] ~= tags[12]
-                                                      and client.focus:tags()[1] ~= tags[13]
-                                                      and client.focus:tags()[1] ~= tags[14] then
-                                                      local focus = client.focus
-                                                      awful.client.movetotag(tags[j])
-                                                      tags[j].selected = true
-                                                      client.focus = focus
-                                                   end
-                                                end))
+                                      awful.key({modkey, shiftkey}, tostring(i), function() movetotag(j) end))
 end
 
 local clientbuttons = awful.util.table.join(
