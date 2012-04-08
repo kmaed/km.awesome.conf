@@ -197,7 +197,7 @@ local globalkeys = awful.util.table.join(
 
    awful.key({modkey, controlkey}, 'b', function () awful.util.spawn('audtool playlist-advance') end),
    awful.key({modkey, controlkey}, 'c', function () awful.util.spawn('audtool playlist-clear') end),
-   awful.key({modkey, controlkey}, 'e', function () tagtoggle(11); launchprogram(editor, 11) end),
+   awful.key({modkey, controlkey}, 'e', function () tagtoggle(11); launchprogram(editor, 11); tags[11]:clients()[1]:swap(awful.client.getmaster()) end),
    awful.key({modkey, controlkey}, 'm', function () tagtoggle(14); launchprogram(musicplayer, 14) end),
    awful.key({modkey, controlkey}, 'n', function () kmawesome.layout.split.incfact(0.01) end),
    awful.key({modkey, controlkey}, 'p', function () kmawesome.layout.split.incfact(-0.01) end),
