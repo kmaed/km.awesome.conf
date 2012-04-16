@@ -31,7 +31,7 @@ local xcompmgr = 'xcompmgr'
 local hsetroot = 'hsetroot -solid black'
 local xscreensaver = 'xscreensaver -no-splash'
 local uim = 'uim-xim'
-local sleepcommand = "sh -c 'echo mem > /sys/power/state'"
+local sleepcommand = "sh -c 'echo mem > /sys/power/state || echo standby > /sys/power/state'"
 
 
 local layouts = {
@@ -182,6 +182,7 @@ local globalkeys = awful.util.table.join(
    awful.key({}, 'XF86Display', function () awful.util.spawn('/home/kmaeda/vga.sh') end),
    awful.key({}, 'XF86ScreenSaver', function () awful.util.spawn('xscreensaver-command -lock') end),
    awful.key({}, 'XF86Sleep', function () awful.util.spawn(sleepcommand) end),
+   awful.key({}, 'Cancel', function () awful.util.spawn(sleepcommand) end),
 
    awful.key({modkey}, 'e', function () launchprogram(editor, 11); awful.tag.viewonly(tags[11]) end),
    awful.key({modkey}, 'm', function () launchprogram(musicplayer, 14); awful.tag.viewonly(tags[14]) end),
