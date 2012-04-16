@@ -182,6 +182,9 @@ local globalkeys = awful.util.table.join(
    awful.key({}, 'XF86Display', function () awful.util.spawn('/home/kmaeda/vga.sh') end),
    awful.key({}, 'XF86ScreenSaver', function () awful.util.spawn('xscreensaver-command -lock') end),
    awful.key({}, 'XF86Sleep', function () awful.util.spawn(sleepcommand) end),
+
+   -- ScrLk means 'Screen_Lock', not 'Scroll_Lock'.
+   awful.key({}, 'Scroll_Lock', function () awful.util.spawn('xscreensaver-command -lock') end),
    awful.key({}, 'Cancel', function () awful.util.spawn(sleepcommand) end),
 
    awful.key({modkey}, 'e', function () launchprogram(editor, 11); awful.tag.viewonly(tags[11]) end),
