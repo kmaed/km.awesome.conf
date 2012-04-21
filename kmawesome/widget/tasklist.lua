@@ -98,10 +98,10 @@ local function widget_tasklist_label_common(c, args)
     local tags = capi.screen[1]:tags()
     local name
     name = util.escape(c.name) or util.escape("<untitled>")
-    for i = 1, 10 do
+    for i = 5, 14 do
        if c:tags()[1] == tags[i] then
           local j
-          if i == 10 then j = 0 else j = i end
+          if i == 14 then j = 0 else j = i-4 end
           name = '[' .. j .. '] ' .. name
           break
        end
@@ -175,10 +175,10 @@ function label.currenttags(c, screen, args)
     if c.sticky then return widget_tasklist_label_common(c, args) end
     local tags = capi.screen[screen]:tags()
     for k, t in ipairs(tags) do
-       if t ~= tags[11]
-          and t ~= tags[12]
-          and t ~= tags[13]
-          and t ~= tags[14] then
+       if t ~= tags[1]
+          and t ~= tags[2]
+          and t ~= tags[3]
+          and t ~= tags[4] then
             local ctags = c:tags()
             for _, v in ipairs(ctags) do
                 if v == t then

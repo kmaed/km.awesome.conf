@@ -39,9 +39,15 @@ local layouts = {
    awful.layout.suit.max.fullscreen
 }
 
-local tags = awful.tag({'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'Editor', 'Web', 'Mail', 'Music'}, s, layouts[1])
+local tags = awful.tag({'Editor', 'Web', 'Mail', 'Music', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'}, s, layouts[1])
 
-awful.tag.viewonly(tags[11])
+awful.tag.viewonly(tags[1])
+awful.tag.setnmaster(1, tags[1])
+
+for i = 2, 14 do
+   awful.tag.setnmaster(0, tags[i])
+end
+
 
 local function launchprogram(program, tagnum)
    if #tags[tagnum]:clients() == 0 then
@@ -59,7 +65,7 @@ local function tagtoggle(tagnum)
 end
 
 local function tagviewonly(tagnum)
-   for i = 1, 10 do
+   for i = 5, 14 do
       tags[i].selected = false
    end
    tags[tagnum].selected = true
@@ -70,10 +76,10 @@ end
 
 local function movetotag(tagnum)
    if client.focus
-      and client.focus:tags()[1] ~= tags[11]
-      and client.focus:tags()[1] ~= tags[12]
-      and client.focus:tags()[1] ~= tags[13]
-      and client.focus:tags()[1] ~= tags[14] then
+      and client.focus:tags()[1] ~= tags[1]
+      and client.focus:tags()[1] ~= tags[2]
+      and client.focus:tags()[1] ~= tags[3]
+      and client.focus:tags()[1] ~= tags[4] then
       local focus = client.focus
       awful.client.movetotag(tags[tagnum])
       tags[tagnum].selected = true
@@ -187,12 +193,12 @@ local globalkeys = awful.util.table.join(
    awful.key({}, 'Scroll_Lock', function () awful.util.spawn('xscreensaver-command -lock') end),
    awful.key({}, 'Cancel', function () awful.util.spawn(sleepcommand) end),
 
-   awful.key({modkey}, 'e', function () launchprogram(editor, 11); awful.tag.viewonly(tags[11]) end),
-   awful.key({modkey}, 'm', function () launchprogram(musicplayer, 14); awful.tag.viewonly(tags[14]) end),
+   awful.key({modkey}, 'e', function () launchprogram(editor, 1); awful.tag.viewonly(tags[1]) end),
+   awful.key({modkey}, 'm', function () launchprogram(musicplayer, 4); awful.tag.viewonly(tags[4]) end),
    awful.key({modkey}, 'n', function () awful.client.focus.byidx(1); if client.focus then client.focus:raise() end end),
    awful.key({modkey}, 'p', function () awful.client.focus.byidx(-1); if client.focus then client.focus:raise() end end),
-   awful.key({modkey}, 's', function () launchprogram(mua, 13); awful.tag.viewonly(tags[13]) end),
-   awful.key({modkey}, 'w', function () launchprogram(webbrowser, 12); awful.tag.viewonly(tags[12]) end),
+   awful.key({modkey}, 's', function () launchprogram(mua, 3); awful.tag.viewonly(tags[3]) end),
+   awful.key({modkey}, 'w', function () launchprogram(webbrowser, 2); awful.tag.viewonly(tags[2]) end),
    awful.key({modkey}, 'Return', function () awful.util.spawn(terminal) end),
    awful.key({modkey}, 'space', function () awful.layout.inc(layouts, 1) end),
 
@@ -201,14 +207,14 @@ local globalkeys = awful.util.table.join(
 
    awful.key({modkey, controlkey}, 'b', function () awful.util.spawn('audtool playlist-advance') end),
    awful.key({modkey, controlkey}, 'c', function () awful.util.spawn('audtool playlist-clear') end),
-   awful.key({modkey, controlkey}, 'e', function () tagtoggle(11); launchprogram(editor, 11); tags[11]:clients()[1]:swap(awful.client.getmaster()) end),
-   awful.key({modkey, controlkey}, 'm', function () tagtoggle(14); launchprogram(musicplayer, 14) end),
+   awful.key({modkey, controlkey}, 'e', function () tagtoggle(1); launchprogram(editor, 1); tags[1]:clients()[1]:swap(awful.client.getmaster()) end),
+   awful.key({modkey, controlkey}, 'm', function () tagtoggle(4); launchprogram(musicplayer, 4) end),
    awful.key({modkey, controlkey}, 'n', function () kmawesome.layout.split.incfact(0.01) end),
    awful.key({modkey, controlkey}, 'p', function () kmawesome.layout.split.incfact(-0.01) end),
    awful.key({modkey, controlkey}, 'r', awesome.restart),
-   awful.key({modkey, controlkey}, 's', function () tagtoggle(13); launchprogram(mua, 13) end),
+   awful.key({modkey, controlkey}, 's', function () tagtoggle(3); launchprogram(mua, 3) end),
    awful.key({modkey, controlkey}, 'v', function () awful.util.spawn('audtool playback-stop') end),
-   awful.key({modkey, controlkey}, 'w', function () tagtoggle(12); launchprogram(webbrowser, 12) end),
+   awful.key({modkey, controlkey}, 'w', function () tagtoggle(2); launchprogram(webbrowser, 2) end),
    awful.key({modkey, controlkey}, 'x', function () awful.util.spawn('audtool playback-play') end),
    awful.key({modkey, controlkey}, 'z', function () awful.util.spawn('audtool playlist-reverse') end)
 )
@@ -220,7 +226,7 @@ local clientkeys = awful.util.table.join(
 
 for i = 0, 9 do
    local j
-   if i == 0 then j = 10 else j = i end
+   if i == 0 then j = 14 else j = i+4 end
    globalkeys = awful.util.table.join(globalkeys,
                                       awful.key({modkey}, tostring(i), function () tagviewonly(j) end),
                                       awful.key({modkey, controlkey}, tostring(i), function () awful.tag.viewtoggle(tags[j]) end),
@@ -241,17 +247,17 @@ awful.rules.rules = {
                     focus = true,
                     keys = clientkeys,
                     buttons = clientbuttons,
-                    tag = tags[10],
+                    tag = tags[14],
                     maximized_vertical = false,
                     maximized_horizontal = false }},
    { rule = { class = "Emacs" },
-     properties = { tag = tags[11] } },
+     properties = { tag = tags[1] } },
    { rule = { class = "Firefox" },
-     properties = { tag = tags[12] } },
+     properties = { tag = tags[2] } },
    { rule = { class = "Sylpheed" },
-     properties = { tag = tags[13] } },
+     properties = { tag = tags[3] } },
    { rule = { class = "Audacious" },
-     properties = { tag = tags[14] } },
+     properties = { tag = tags[4] } },
    { rule = { class = "fontforge" },
      properties = { floating = true } },
 }
@@ -264,8 +270,8 @@ client.add_signal("manage",
                      c.opacity = 0.5
                      if client.focus == c then c.opacity = 1 end
 
-                     if c:tags()[1] == tags[10] then
-                        for i = 1, 9 do
+                     if c:tags()[1] == tags[14] then
+                        for i = 5, 13 do
                            if #tags[i]:clients() == 0 then
                               c:tags({tags[i]})
                               break
@@ -278,7 +284,7 @@ client.add_signal("manage",
                         c:raise()
                      end
 
-                     if c:tags()[1] == tags[12] and #tags[12]:clients() > 1 then
+                     if c:tags()[1] == tags[2] and #tags[2]:clients() > 1 then
                         awful.client.floating.set(c, true)
                      end
 
