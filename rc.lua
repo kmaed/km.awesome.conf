@@ -199,6 +199,8 @@ local globalkeys = awful.util.table.join(
    awful.key({modkey}, 'p', function () awful.client.focus.byidx(-1); if client.focus then client.focus:raise() end end),
    awful.key({modkey}, 's', function () launchprogram(mua, 3); awful.tag.viewonly(tags[3]) end),
    awful.key({modkey}, 'w', function () launchprogram(webbrowser, 2); awful.tag.viewonly(tags[2]) end),
+   awful.key({modkey}, '-', function () awful.util.spawn('amixer set Master 1-') end),
+   awful.key({modkey}, '=', function () awful.util.spawn('amixer set Master 1+') end),
    awful.key({modkey}, 'Return', function () awful.util.spawn(terminal) end),
    awful.key({modkey}, 'space', function () awful.layout.inc(layouts, 1) end),
 
