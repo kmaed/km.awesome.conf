@@ -262,6 +262,8 @@ awful.rules.rules = {
      properties = { tag = tags[4] } },
    { rule = { class = "fontforge" },
      properties = { floating = true } },
+   { rule = { class = "Gimp" },
+     properties = { floating = true } },
 }
 
 
@@ -305,5 +307,7 @@ client.add_signal("focus",
 client.add_signal("unfocus",
                   function(c)
                      c.border_color = beautiful.border_normal
-                     c.opacity = 0.5
+                     if not awful.client.floating.get(c) then
+                        c.opacity = 0.5
+                     end
                   end)
