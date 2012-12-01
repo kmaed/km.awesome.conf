@@ -163,10 +163,10 @@ function battery_status ()
    return table.concat(output," ") --FIXME: better separation for several batteries. maybe a pipe?
 end
 if os.execute("acpitool") == 0 then
-   mybattmon.text = " " .. battery_status() .. " "
+   mybattmon:set_markup(" " .. battery_status() .. " ")
    my_battmon_timer=timer({timeout=30})
-   my_battmon_timer:add_signal("timeout", function()
-                                             mybattmon.text = " " .. battery_status() .. " "
+   my_battmon_timer:connect_signal("timeout", function()
+                                                 mybattmon:set_markup(" " .. battery_status() .. " ")
                                           end)
    my_battmon_timer:start()
 end
