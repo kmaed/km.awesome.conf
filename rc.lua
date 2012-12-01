@@ -1,17 +1,21 @@
 -- kmawesome: My configuration of awesome window manager
 -- Copyright (c) 2012 Kazuki Maeda <kmaeda@users.sourceforge.jp>
 
-require('awful')
+local awful = require('awful')
+awful.rules = require('awful.rules')
 require('awful.autofocus')
-require('awful.rules')
-require('beautiful')
-require('naughty')
+local beautiful = require('beautiful')
+local naughty = require('naughty')
+local wibox = require('wibox')
 
 -- http://git.sysphere.org/vicious/
-require('vicious')
+local vicious = require('vicious')
 
-require('kmawesome.layout.split')
-require('kmawesome.widget.tasklist')
+local kmawesome = {}
+kmawesome.layout = {}
+kmawesome.widget = {}
+kmawesome.layout.split = require('kmawesome.layout.split')
+kmawesome.widget.tasklist = require('kmawesome.widget.tasklist')
 
 beautiful.init('/home/kmaeda/.config/awesome/kmawesome/theme.lua')
 
@@ -32,7 +36,6 @@ local hsetroot = 'hsetroot -solid black'
 local xscreensaver = 'xscreensaver -no-splash'
 local uim = 'uim-xim'
 local sleepcommand = "sh -c 'echo mem > /sys/power/state || echo standby > /sys/power/state'"
-
 
 local layouts = {
    kmawesome.layout.split.v,
@@ -110,8 +113,7 @@ end
 kmawesome.layout.split.setfact(ew/waw)
 mouse.coords({x = 2000, y = 2000})
 
-local mytextclock = awful.widget.textclock({align = 'right', ellipsize='start'}, '%a %b %d, %Y; %H:%M:%S', 0.1)
-local mysystray = widget({type = 'systray'})
+local mytextclock = awful.widget.textclock('%a %b %d, %Y; %H:%M:%S', 0.1)
 
 local memwidget = awful.widget.graph()
 memwidget:set_width(32)
@@ -119,7 +121,7 @@ memwidget:set_height(16)
 memwidget:set_background_color('#494B4F')
 memwidget:set_border_color('#000000')
 memwidget:set_color('#AECF96')
-memwidget:set_gradient_colors({ '#AECF96', '#88A175', '#FF5656' })
+--memwidget:set_gradient_colors({ '#AECF96', '#88A175', '#FF5656' })
 vicious.register(memwidget, vicious.widgets.mem, '$1', 1)
 
 local cpuwidget = awful.widget.graph()
@@ -128,11 +130,12 @@ cpuwidget:set_height(16)
 cpuwidget:set_background_color('#494B4F')
 cpuwidget:set_color('#FF5656')
 cpuwidget:set_border_color('#000000')
-cpuwidget:set_gradient_colors({ '#FF5656', '#88A175', '#AECF96' })
+--cpuwidget:set_gradient_colors({ '#FF5656', '#88A175', '#AECF96' })
 vicious.register(cpuwidget, vicious.widgets.cpu, '$1', 1)
 
 -- http://awesome.naquadah.org/wiki/Acpitools-based_battery_widget
-local mybattmon = widget({ type = "textbox", name = "mybattmon", align = "right" })
+--local mybattmon = widget.textbox({ type = "textbox", name = "mybattmon", align = "right" })
+local mybattmon = wibox.widget.textbox()
 function battery_status ()
    local output={} --output buffer
    local fd=io.popen("acpitool -b", "r") --list present batteries
@@ -169,17 +172,22 @@ if os.execute("acpitool") == 0 then
 end
 
 local mywibox = awful.wibox({position = 'top', height=16})
-mywibox.widgets = {
-   mytextclock,
-   mybattmon,
-   mysystray,
-   cpuwidget,
-   memwidget,
-   kmawesome.widget.tasklist(function(c)
-                                return kmawesome.widget.tasklist.label.currenttags(c, 1)
-                             end),
-   layout = awful.widget.layout.horizontal.rightleft
-}
+
+local left_layout = wibox.layout.fixed.horizontal()
+left_layout:add(cpuwidget)
+left_layout:add(memwidget)
+
+local right_layout = wibox.layout.fixed.horizontal()
+right_layout:add(wibox.widget.systray())
+right_layout:add(mybattmon)
+right_layout:add(mytextclock)
+
+local layout = wibox.layout.align.horizontal()
+layout:set_left(left_layout)
+layout:set_middle(kmawesome.widget.tasklist(1, kmawesome.widget.tasklist.filter.currenttags))
+layout:set_right(right_layout)
+
+mywibox:set_widget(layout)
 
 local globalkeys = awful.util.table.join(
    awful.key({}, 'XF86AudioLowerVolume', function () awful.util.spawn('amixer set Master 1-') end),
@@ -268,7 +276,7 @@ awful.rules.rules = {
 
 
 
-client.add_signal("manage",
+client.connect_signal("manage",
                   function (c)
                      c.size_hints_honor = false
                      c.opacity = 0.5
@@ -299,12 +307,12 @@ client.add_signal("manage",
                      end
                   end)
 
-client.add_signal("focus",
+client.connect_signal("focus",
                   function(c)
                      c.border_color = beautiful.border_focus
                      c.opacity = 1
                   end)
-client.add_signal("unfocus",
+client.connect_signal("unfocus",
                   function(c)
                      c.border_color = beautiful.border_normal
                      if not awful.client.floating.get(c) then
