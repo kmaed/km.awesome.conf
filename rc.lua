@@ -17,8 +17,6 @@ kmawesome.widget = {}
 kmawesome.layout.split = require('kmawesome.layout.split')
 kmawesome.widget.tasklist = require('kmawesome.widget.tasklist')
 
-beautiful.init('/home/kmaeda/.config/awesome/kmawesome/theme.lua')
-
 local modkey = 'Mod4'
 local shiftkey = 'Shift'
 local controlkey = 'Control'
@@ -36,6 +34,28 @@ local hsetroot = 'hsetroot -solid black'
 local xscreensaver = 'xscreensaver -no-splash'
 local uim = 'uim-xim'
 local sleepcommand = "sh -c 'echo mem > /sys/power/state || echo standby > /sys/power/state'"
+
+if awesome.startup_errors then
+    naughty.notify({ preset = naughty.config.presets.critical,
+                     title = "Oops, there were errors during startup!",
+                     text = awesome.startup_errors })
+end
+
+do
+    local in_error = false
+    awesome.connect_signal("debug::error", function (err)
+        -- Make sure we don't go into an endless error loop
+        if in_error then return end
+        in_error = true
+
+        naughty.notify({ preset = naughty.config.presets.critical,
+                         title = "Oops, an error happened!",
+                         text = err })
+        in_error = false
+    end)
+end
+
+beautiful.init('/home/kmaeda/.config/awesome/kmawesome/theme.lua')
 
 local layouts = {
    kmawesome.layout.split.v,
@@ -217,7 +237,7 @@ local globalkeys = awful.util.table.join(
 
    awful.key({modkey, controlkey}, 'b', function () awful.util.spawn('audtool playlist-advance') end),
    awful.key({modkey, controlkey}, 'c', function () awful.util.spawn('audtool playlist-clear') end),
-   awful.key({modkey, controlkey}, 'e', function () tagtoggle(1); launchprogram(editor, 1); tags[1]:clients()[1]:swap(awful.client.getmaster()) end),
+   awful.key({modkey, controlkey}, 'e', function () tagtoggle(1); launchprogram(editor, 1); if awful.client.getmaster() then tags[1]:clients()[1]:swap(awful.client.getmaster()) end end),
    awful.key({modkey, controlkey}, 'm', function () tagtoggle(4); launchprogram(musicplayer, 4) end),
    awful.key({modkey, controlkey}, 'n', function () kmawesome.layout.split.incfact(0.01) end),
    awful.key({modkey, controlkey}, 'p', function () kmawesome.layout.split.incfact(-0.01) end),
