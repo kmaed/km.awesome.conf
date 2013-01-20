@@ -1,5 +1,5 @@
 -- kmawesome: My configuration of awesome window manager
--- Copyright (c) 2012 Kazuki Maeda <kmaeda@users.sourceforge.jp>
+-- Copyright (c) 2012-2013 Kazuki Maeda <kmaeda@users.sourceforge.jp>
 
 local awful = require('awful')
 awful.rules = require('awful.rules')
@@ -71,11 +71,22 @@ for i = 2, 14 do
    awful.tag.setnmaster(0, tags[i])
 end
 
+local function setemacsatmaster()
+   if tags[1]:clients()[1] and awful.client.getmaster() then
+      tags[1]:clients()[1]:swap(awful.client.getmaster())
+   end
+end
+
+local et = timer({ timeout = 0.5 })
+et:connect_signal("timeout", function() et:stop(); setemacsatmaster() end)
 
 local function launchprogram(program, tagnum)
    if #tags[tagnum]:clients() == 0 then
       awful.util.spawn(program)
       tags[tagnum].selected = true
+      if tagnum == 1 then
+         et:start()
+      end
    end
 end
 
@@ -237,14 +248,14 @@ local globalkeys = awful.util.table.join(
 
    awful.key({modkey, controlkey}, 'b', function () awful.util.spawn('audtool playlist-advance') end),
    awful.key({modkey, controlkey}, 'c', function () awful.util.spawn('audtool playlist-clear') end),
-   awful.key({modkey, controlkey}, 'e', function () tagtoggle(1); launchprogram(editor, 1); if tags[1]:clients()[1] and awful.client.getmaster() then tags[1]:clients()[1]:swap(awful.client.getmaster()) end end),
-   awful.key({modkey, controlkey}, 'm', function () tagtoggle(4); launchprogram(musicplayer, 4) end),
+   awful.key({modkey, controlkey}, 'e', function () tagtoggle(1); launchprogram(editor, 1); setemacsatmaster() end),
+   awful.key({modkey, controlkey}, 'm', function () tagtoggle(4); launchprogram(musicplayer, 4); setemacsatmaster() end),
    awful.key({modkey, controlkey}, 'n', function () kmawesome.layout.split.incfact(0.01) end),
    awful.key({modkey, controlkey}, 'p', function () kmawesome.layout.split.incfact(-0.01) end),
    awful.key({modkey, controlkey}, 'r', awesome.restart),
-   awful.key({modkey, controlkey}, 's', function () tagtoggle(3); launchprogram(mua, 3) end),
+   awful.key({modkey, controlkey}, 's', function () tagtoggle(3); launchprogram(mua, 3); setemacsatmaster() end),
    awful.key({modkey, controlkey}, 'v', function () awful.util.spawn('audtool playback-stop') end),
-   awful.key({modkey, controlkey}, 'w', function () tagtoggle(2); launchprogram(webbrowser, 2) end),
+   awful.key({modkey, controlkey}, 'w', function () tagtoggle(2); launchprogram(webbrowser, 2); setemacsatmaster() end),
    awful.key({modkey, controlkey}, 'x', function () awful.util.spawn('audtool playback-play') end),
    awful.key({modkey, controlkey}, 'z', function () awful.util.spawn('audtool playlist-reverse') end)
 )
@@ -258,8 +269,8 @@ for i = 0, 9 do
    local j
    if i == 0 then j = 14 else j = i+4 end
    globalkeys = awful.util.table.join(globalkeys,
-                                      awful.key({modkey}, tostring(i), function () tagviewonly(j) end),
-                                      awful.key({modkey, controlkey}, tostring(i), function () awful.tag.viewtoggle(tags[j]) end),
+                                      awful.key({modkey}, tostring(i), function () tagviewonly(j); setemacsatmaster() end),
+                                      awful.key({modkey, controlkey}, tostring(i), function () awful.tag.viewtoggle(tags[j]); setemacsatmaster() end),
                                       awful.key({modkey, shiftkey}, tostring(i), function() movetotag(j) end))
 end
 
