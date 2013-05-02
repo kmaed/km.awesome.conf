@@ -26,7 +26,6 @@ kmaedaさんの生態
 以上に加えて，たまに
 
  * Adobe Reader 9: PDF ビューワ（テスト用）
- * LibreOffice: 事務用
  * Eye of GNOME: 画像ビューワ
  * GIMP: 画像加工
  * FontForge: フォント編集
@@ -50,14 +49,14 @@ kmaedaさんの生態
 
 Emacs 使いなので，デフォルトの vi 風から Emacs 風に変更しています．余計な機能は誤って作動するとイライラの原因になるため，自分が使う機能以外は切っています．
 
- * s-1, s-2, ..., s-9, s-0: それぞれの番号のタグのみを表示．ただし，Emacs, Firefox, Sylpheed, Audacious はこれによる影響を受けない．
+ * s-1, s-2, ..., s-9, s-0: それぞれの番号のタグのみを表示．ただし，Emacs はこれによる影響を受けない．
  * s-c: フォーカスのあるウインドウを閉じる．
- * s-e: Emacs のみ表示．Emacs が起動していない場合は起動して表示．
- * s-m: Audacious のみ表示．Audacious が起動していない場合は起動して表示．
+ * s-e: Emacs を表示．Emacs が起動していない場合は起動して表示．
+ * s-m: Audacious のみ表示（Emacs はそのまま）．Audacious が起動していない場合は起動して表示．
  * s-n: 次のウインドウにフォーカス.
  * s-p: 前のウインドウにフォーカス．
- * s-s: Sylpheed のみ表示．Sylpheed が起動していない場合は起動して表示．
- * s-w: Firefox のみ表示．Firefox が起動していない場合は起動して表示．
+ * s-s: Sylpheed のみ表示（Emacs はそのまま）．Sylpheed が起動していない場合は起動して表示．
+ * s-w: Firefox のみ表示（Emacs はそのまま）．Firefox が起動していない場合は起動して表示．
  * s-Return: evilvte を起動する．
  * s-space: layout を切り替える（実質的に全画面表示）．
  * s-Shift-1, s-Shift-2, ..., s-Shift-9, s-Shift-0: それぞれの番号のタグへとフォーカスのあるウインドウを移動する．ただし，Emacs, Firefox, Sylpheed, Audacious を移動することはできない．

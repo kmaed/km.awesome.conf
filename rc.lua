@@ -77,7 +77,7 @@ local function setemacsatmaster()
    end
 end
 
-local et = timer({ timeout = 0.5 })
+local et = timer({ timeout = 1 })
 et:connect_signal("timeout", function() et:stop(); setemacsatmaster() end)
 
 local function launchprogram(program, tagnum)
@@ -99,7 +99,7 @@ local function tagtoggle(tagnum)
 end
 
 local function tagviewonly(tagnum)
-   for i = 5, 14 do
+   for i = 2, 14 do
       tags[i].selected = false
    end
    tags[tagnum].selected = true
@@ -232,12 +232,12 @@ local globalkeys = awful.util.table.join(
    awful.key({}, 'Scroll_Lock', function () awful.util.spawn('xscreensaver-command -lock') end),
    awful.key({}, 'Cancel', function () awful.util.spawn(sleepcommand) end),
 
-   awful.key({modkey}, 'e', function () launchprogram(editor, 1); awful.tag.viewonly(tags[1]) end),
-   awful.key({modkey}, 'm', function () launchprogram(musicplayer, 4); awful.tag.viewonly(tags[4]) end),
+   awful.key({modkey}, 'e', function () launchprogram(editor, 1); tags[1].selected = true; setemacsatmaster(); client.focus = tags[1]:clients()[1] end),
+   awful.key({modkey}, 'm', function () launchprogram(musicplayer, 4); tagviewonly(4) end),
    awful.key({modkey}, 'n', function () awful.client.focus.byidx(1); if client.focus then client.focus:raise() end end),
    awful.key({modkey}, 'p', function () awful.client.focus.byidx(-1); if client.focus then client.focus:raise() end end),
-   awful.key({modkey}, 's', function () launchprogram(mua, 3); awful.tag.viewonly(tags[3]) end),
-   awful.key({modkey}, 'w', function () launchprogram(webbrowser, 2); awful.tag.viewonly(tags[2]) end),
+   awful.key({modkey}, 's', function () launchprogram(mua, 3); tagviewonly(3) end),
+   awful.key({modkey}, 'w', function () launchprogram(webbrowser, 2); tagviewonly(2) end),
    awful.key({modkey}, '-', function () awful.util.spawn('amixer set Master 1-') end),
    awful.key({modkey}, '=', function () awful.util.spawn('amixer set Master 1+') end),
    awful.key({modkey}, 'Return', function () awful.util.spawn(terminal) end),
