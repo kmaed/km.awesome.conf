@@ -99,10 +99,12 @@ local function tagtoggle(tagnum)
 end
 
 local function tagviewonly(tagnum)
-   for i = 2, 14 do
-      tags[i].selected = false
-   end
    tags[tagnum].selected = true
+   for i = 2, 14 do
+      if i ~= tagnum then
+         tags[i].selected = false
+      end
+   end
    if #tags[tagnum]:clients() > 0 then
       client.focus = tags[tagnum]:clients()[1]
    end
