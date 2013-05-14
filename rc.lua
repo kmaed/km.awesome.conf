@@ -234,7 +234,7 @@ local globalkeys = awful.util.table.join(
    awful.key({}, 'Scroll_Lock', function () awful.util.spawn('xscreensaver-command -lock') end),
    awful.key({}, 'Cancel', function () awful.util.spawn(sleepcommand) end),
 
-   awful.key({modkey}, 'e', function () launchprogram(editor, 1); tags[1].selected = true; setemacsatmaster(); client.focus = tags[1]:clients()[1] end),
+   awful.key({modkey}, 'e', function () launchprogram(editor, 1); tags[1].selected = true; setemacsatmaster(); if tags[1]:clients()[1] then client.focus = tags[1]:clients()[1] end end),
    awful.key({modkey}, 'm', function () launchprogram(musicplayer, 4); tagviewonly(4); setemacsatmaster() end),
    awful.key({modkey}, 'n', function () awful.client.focus.byidx(1); if client.focus then client.focus:raise() end end),
    awful.key({modkey}, 'p', function () awful.client.focus.byidx(-1); if client.focus then client.focus:raise() end end),
