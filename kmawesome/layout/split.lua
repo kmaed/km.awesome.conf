@@ -75,8 +75,7 @@ local function arrange_entry(param, dir)
       height = wa.height
    }
 
-   local h_split = false
-   if nmaster > 0 and nother > 0 then
+   if nmaster > 0 then
       mwa.width = mwa.width*mwfact
       owa.x = owa.x + mwa.width
       owa.width = owa.width - mwa.width
