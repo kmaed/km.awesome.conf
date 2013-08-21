@@ -338,6 +338,8 @@ client.connect_signal("manage",
                         awful.placement.no_overlap(c)
                         awful.placement.no_offscreen(c)
                      end
+                     awful.client.cycle(true)
+                     setemacsatmaster()
                   end)
 
 client.connect_signal("focus",
