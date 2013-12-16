@@ -254,7 +254,7 @@ local globalkeys = awful.util.table.join(
    awful.key({modkey, controlkey}, 'm', function () tagtoggle(4); launchprogram(musicplayer, 4); setemacsatmaster() end),
    awful.key({modkey, controlkey}, 'n', function () kmawesome.layout.split.incfact(0.01) end),
    awful.key({modkey, controlkey}, 'p', function () kmawesome.layout.split.incfact(-0.01) end),
-   awful.key({modkey, controlkey}, 'r', awesome.restart),
+   awful.key({modkey, controlkey}, 'r', function () awful.util.spawn('sh -c "pgrep radiotray || radiotray"') end),
    awful.key({modkey, controlkey}, 's', function () tagtoggle(3); launchprogram(mua, 3); setemacsatmaster() end),
    awful.key({modkey, controlkey}, 'v', function () awful.util.spawn('audtool playback-stop') end),
    awful.key({modkey, controlkey}, 'w', function () tagtoggle(2); launchprogram(webbrowser, 2); setemacsatmaster() end),
