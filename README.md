@@ -55,6 +55,7 @@ Emacs 使いなので，デフォルトの vi 風から Emacs 風に変更して
  * s-m: Audacious のみ表示（Emacs はそのまま）．Audacious が起動していない場合は起動して表示．
  * s-n: 次のウインドウにフォーカス.
  * s-p: 前のウインドウにフォーカス．
+ * s-r: Radio Tray を起動する．
  * s-s: Sylpheed のみ表示（Emacs はそのまま）．Sylpheed が起動していない場合は起動して表示．
  * s-w: Firefox のみ表示（Emacs はそのまま）．Firefox が起動していない場合は起動して表示．
  * s-Return: evilvte を起動する．
@@ -69,7 +70,7 @@ Emacs 使いなので，デフォルトの vi 風から Emacs 風に変更して
  * C-s-m: Audacious の表示を切り替える．Audacious が起動していない場合は起動して表示．
  * C-s-n: split layout のとき，前にあるウインドウの表示比率を大きくする．
  * C-s-p: split layout のとき，前にあるウインドウの表示比率を小さくする．
- * C-s-r: Radio Tray を起動する．
+ * C-s-r: awesome を再起動する．
  * C-s-s: Sylpheed の表示を切り替える．Sylpheed が起動していない場合は起動して表示．
  * C-s-v: Audacious の再生を停止する．
  * C-s-w: Firefox の表示を切り替える．Firefox が起動していない場合は起動して表示．
