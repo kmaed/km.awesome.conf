@@ -138,7 +138,8 @@ for app = 1, #autorun do
 end
 
 local waw = screen[1].workarea.width
-local ew = 615
+local ew = 710
+if waw < 2000 then ew = 615 end
 if waw < 1700 then ew = 530 end
 for i = 1, 14 do
    awful.tag.setmwfact(ew/waw, tags[i])
