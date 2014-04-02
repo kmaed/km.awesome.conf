@@ -138,7 +138,7 @@ for app = 1, #autorun do
 end
 
 local waw = screen[1].workarea.width
-local ew = 710
+local ew = 765
 if waw < 2000 then ew = 615 end
 if waw < 1700 then ew = 530 end
 for i = 1, 14 do
@@ -196,7 +196,7 @@ function battery_status ()
    end
    return table.concat(output," ") --FIXME: better separation for several batteries. maybe a pipe?
 end
-if os.execute("acpitool") == 0 then
+ if os.execute("acpitool") == 0 then
    mybattmon:set_markup(" " .. battery_status() .. " ")
    my_battmon_timer=timer({timeout=30})
    my_battmon_timer:connect_signal("timeout", function()
