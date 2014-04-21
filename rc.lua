@@ -58,6 +58,7 @@ end
 beautiful.init('/home/kmaeda/.config/awesome/kmawesome/theme.lua')
 
 local layouts = {
+   kmawesome.layout.split.h,
    kmawesome.layout.split.v,
    awful.layout.suit.max.fullscreen
 }
@@ -138,14 +139,13 @@ for app = 1, #autorun do
 end
 
 local waw = screen[1].workarea.width
-local ew = 765
-if waw < 2000 then ew = 615 end
+local ew = 615
 if waw < 1700 then ew = 530 end
 for i = 1, 14 do
    awful.tag.setmwfact(ew/waw, tags[i])
 end
 kmawesome.layout.split.setfact(ew/waw)
-mouse.coords({x = 2000, y = 2000})
+mouse.coords({x = 3000, y = 2000})
 
 local mytextclock = awful.widget.textclock('%a %b %d, %Y; %H:%M:%S', 0.1)
 
