@@ -144,7 +144,7 @@ if waw < 1700 then ew = 530 end
 for i = 1, 14 do
    awful.tag.setmwfact(ew/waw, tags[i])
 end
-kmawesome.layout.split.setfact(ew/waw)
+kmawesome.layout.split.setfact(1-ew/(waw-ew))
 mouse.coords({x = 3000, y = 2000})
 
 local mytextclock = awful.widget.textclock('%a %b %d, %Y; %H:%M:%S', 0.1)
