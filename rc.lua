@@ -33,6 +33,7 @@ local xcompmgr = 'xcompmgr'
 local hsetroot = 'hsetroot -solid black'
 local xscreensaver = 'xscreensaver -no-splash'
 local uim = 'uim-xim'
+local alsasetup = 'sh -c "~/alsasetup.py > ~/.asoundrc"'
 local sleepcommand = "sh -c 'echo mem > /sys/power/state || echo standby > /sys/power/state'"
 
 if awesome.startup_errors then
@@ -131,6 +132,7 @@ local autorun = {
    xcompmgr,
    hsetroot,
    xscreensaver,
+   alsasetup,
    uim,
 }
 
