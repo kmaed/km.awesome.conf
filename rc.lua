@@ -208,13 +208,38 @@ function battery_status ()
    end
    return table.concat(output," ") --FIXME: better separation for several batteries. maybe a pipe?
 end
- if os.execute("acpitool") == 0 then
+if os.execute("acpitool") == 0 then
    mybattmon:set_markup(" " .. battery_status() .. " ")
    my_battmon_timer=timer({timeout=30})
    my_battmon_timer:connect_signal("timeout", function()
                                                  mybattmon:set_markup(" " .. battery_status() .. " ")
                                           end)
    my_battmon_timer:start()
+end
+
+local mysensors = wibox.widget.textbox()
+
+function sensors_status ()
+   local output={} --output buffer
+   local fd=io.popen("sensors")
+   local line=fd:read()
+   while line do --there might be several batteries.
+      local sensors_res = string.match(line, "Physical id 0:  (%a*.%d+.%d)°")
+      if sensors_res then
+         table.insert(output, "<span color=\"#FF8888\">" .. sensors_res .."℃</span>")
+      end --even more data unavailable: we might be getting an unexpected output format, so let's just skip this line.
+      line=fd:read() --read next line
+   end
+   return table.concat(output," ")
+end
+
+if os.execute('sensors') == 0 then
+   mysensors:set_markup(" " .. sensors_status() .. " ")
+   my_sensors_timer=timer({timeout=10})
+   my_sensors_timer:connect_signal("timeout", function()
+                                                 mysensors:set_markup(" " .. sensors_status() .. " ")
+                                          end)
+   my_sensors_timer:start()
 end
 
 local mywibox = awful.wibox({position = 'top', height=16})
@@ -226,6 +251,7 @@ left_layout:add(memwidget)
 local right_layout = wibox.layout.fixed.horizontal()
 right_layout:add(wibox.widget.systray())
 right_layout:add(mybattmon)
+right_layout:add(mysensors)
 right_layout:add(mytextclock)
 
 local layout = wibox.layout.align.horizontal()
