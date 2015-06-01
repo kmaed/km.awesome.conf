@@ -224,7 +224,7 @@ function sensors_status ()
    local fd=io.popen("sensors")
    local line=fd:read()
    while line do --there might be several batteries.
-      local sensors_res = string.match(line, "Physical id 0:  (%a*.%d+.%d)°")
+      local sensors_res = string.match(line, "Physical id 0:  (%a*.%d+).%d°")
       if sensors_res then
          table.insert(output, "<span color=\"#FF8888\">" .. sensors_res .."℃</span>")
       end --even more data unavailable: we might be getting an unexpected output format, so let's just skip this line.
