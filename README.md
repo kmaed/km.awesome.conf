@@ -98,6 +98,11 @@ Tasklist
 
 通常の awesome の tasklist と違い，タグの selected に関係なく全てのプログラムが表示されます．ただし，Emacs, Firefox, Sylpheed, Audacious は表示されません．プログラム名の前には，そのプログラムのタグ番号が表示され，selected なものは明るく，さらにフォーカスのあるものはプログラム名が黄色で表示されます．
 
+alsasetup.py
+------------
+
+おまけです．外付けの USB Audio などを接続した際にはそちらが PCM 出力のデフォルトになるように ~/.asoundrc を出力する超単純な Python スクリプトです．
+
 意見・要望など
 -------------
 
