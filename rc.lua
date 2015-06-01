@@ -33,8 +33,11 @@ local xcompmgr = 'xcompmgr'
 local hsetroot = 'hsetroot -solid black'
 local xscreensaver = 'xscreensaver -no-splash'
 local uim = 'uim-xim'
+local nmapplet = 'sh -c "pgrep nm-applet || nm-applet"'
+local polkitgnome = '/usr/libexec/polkit-gnome-authentication-agent-1'
 local alsasetup = 'sh -c "~/alsasetup.py > ~/.asoundrc"'
 local sleepcommand = "sh -c 'echo mem > /sys/power/state || echo standby > /sys/power/state'"
+
 
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
@@ -134,6 +137,8 @@ local autorun = {
    xscreensaver,
    alsasetup,
    uim,
+   nmapplet,
+   polkitgnome,
 }
 
 for app = 1, #autorun do
