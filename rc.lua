@@ -62,8 +62,8 @@ end
 beautiful.init('/home/kmaeda/.config/awesome/kmawesome/theme.lua')
 
 local layouts = {
-   kmawesome.layout.split.h,
    kmawesome.layout.split.v,
+   kmawesome.layout.split.h,
    awful.layout.suit.max.fullscreen
 }
 
