@@ -277,7 +277,6 @@ local globalkeys = awful.util.table.join(
    awful.key({modkey}, 'm', function () launchprogram(musicplayer, 4); tagviewonly(4); setemacsatmaster() end),
    awful.key({modkey}, 'n', function () awful.client.focus.byidx(1); if client.focus then client.focus:raise() end end),
    awful.key({modkey}, 'p', function () awful.client.focus.byidx(-1); if client.focus then client.focus:raise() end end),
-   awful.key({modkey}, 'r', function () awful.util.spawn('sh -c "pgrep radiotray || radiotray"') end),
    awful.key({modkey}, 's', function () launchprogram(mua, 3); tagviewonly(3); setemacsatmaster() end),
    awful.key({modkey}, 'w', function () launchprogram(webbrowser, 2); tagviewonly(2); setemacsatmaster() end),
    awful.key({modkey}, '-', function () awful.util.spawn('amixer set Master 1-') end),
