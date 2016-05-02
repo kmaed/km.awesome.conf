@@ -32,7 +32,7 @@ local xmodmap = 'xmodmap /home/kmaeda/.Xmodmap'
 local xcompmgr = 'xcompmgr'
 local hsetroot = 'hsetroot -solid black'
 local xscreensaver = 'xscreensaver -no-splash'
-local uim = 'uim-xim'
+local ibus = 'ibus-daemon'
 local nmapplet = 'sh -c "pgrep nm-applet || nm-applet"'
 local polkitgnome = '/usr/libexec/polkit-gnome-authentication-agent-1'
 local alsasetup = 'sh -c "~/alsasetup.py > ~/.asoundrc"'
@@ -136,7 +136,7 @@ local autorun = {
    hsetroot,
    xscreensaver,
    alsasetup,
-   uim,
+   ibus,
    nmapplet,
    polkitgnome,
 }
