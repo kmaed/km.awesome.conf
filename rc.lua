@@ -30,7 +30,7 @@ local xsetb = 'xset -b'
 local xsetr = 'xset r rate 250 25'
 local xmodmap = 'xmodmap /home/kmaeda/.Xmodmap'
 local xcompmgr = 'xcompmgr'
-local hsetroot = 'hsetroot -solid black'
+local hsetroot = 'hsetroot -solid #000000'
 local xscreensaver = 'xscreensaver -no-splash'
 local ibus = 'ibus-daemon'
 local nmapplet = 'sh -c "pgrep nm-applet || nm-applet"'
@@ -131,9 +131,8 @@ end
 local autorun = {
    xsetb,
    xsetr,
-   xmodmap,
-   xcompmgr,
    hsetroot,
+   xmodmap,
    xscreensaver,
    alsasetup,
    ibus,
@@ -393,3 +392,5 @@ client.connect_signal("unfocus",
                         c.opacity = 0.5
                      end
                   end)
+
+awful.util.spawn(xcompmgr)
