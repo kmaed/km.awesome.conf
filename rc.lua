@@ -1,5 +1,5 @@
 -- kmawesome: My configuration of awesome window manager
--- Copyright (c) 2012-2016 Kazuki Maeda <kmaeda@kmaeda.net>
+-- Copyright (c) 2012-2017 Kazuki Maeda <kmaeda@kmaeda.net>
 
 local awful = require('awful')
 awful.rules = require('awful.rules')
@@ -345,7 +345,19 @@ awful.rules.rules = {
      properties = { floating = true } },
 }
 
-
+local function assignnewtag(c)
+   for i = 5, 13 do
+      if #tags[i]:clients() == 0 then
+         c:tags({tags[i]})
+         break
+      end
+   end
+   if not c:tags()[1].selected then
+      c:tags()[1].selected = true
+   end
+   client.focus = c
+   c:raise()
+end
 
 client.connect_signal("manage",
                   function (c)
@@ -354,21 +366,16 @@ client.connect_signal("manage",
                      if client.focus == c then c.opacity = 1 end
 
                      if c:tags()[1] == tags[14] then
-                        for i = 5, 13 do
-                           if #tags[i]:clients() == 0 then
-                              c:tags({tags[i]})
-                              break
-                           end
-                        end
-                        if not c:tags()[1].selected then
-                           c:tags()[1].selected = true
-                        end
-                        client.focus = c
-                        c:raise()
+                        assignnewtag(c)
                      end
 
                      if c:tags()[1] == tags[2] and #tags[2]:clients() > 1 then
                         awful.client.floating.set(c, true)
+                        assignnewtag(c)
+                     end
+
+                     if c:tags()[1] == tags[3] and #tags[3]:clients() > 1 then
+                        assignnewtag(c)
                      end
 
                      awful.client.setslave(c)
