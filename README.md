@@ -4,7 +4,7 @@ kmawesome (kmaedaさん用 awesome 設定ファイル)
 概要
 ----
 
-これはkmaedaさんが普段使っている awesome v3.5.1 の設定ファイルです．自分用 layout と tasklist を含みます．完全に自分のニーズに合わせてプログラムしていますので，そのままでは使い物にならないと思います．参考程度にご覧下さい．
+これはkmaedaさんが普段使っている awesome v3.5.9 の設定ファイルです．自分用 layout と tasklist を含みます．完全に自分のニーズに合わせてプログラムしていますので，そのままでは使い物にならないと思います．参考程度にご覧下さい．
 
 awesome とは
 ------------
@@ -25,7 +25,6 @@ kmaedaさんの生態
 
 以上に加えて，たまに
 
- * Adobe Reader 9: PDF ビューワ（テスト用）
  * Eye of GNOME: 画像ビューワ
  * GIMP: 画像加工
  * FontForge: フォント編集
@@ -42,7 +41,7 @@ kmaedaさんの生態
  * hsetroot: 背景色を黒に
  * xcompmgr: ウインドウ透過．背景色を黒にして，unfocus 時に opacity = 0.5 にすることで，フォーカスのウインドウ以外は暗くなります．
  * xscreensaver: スクリーンセーバー
- * uim-xim: 日本語入力
+ * ibus-daemon: 日本語入力
 
 キーバインド
 ------------
@@ -55,7 +54,6 @@ Emacs 使いなので，デフォルトの vi 風から Emacs 風に変更して
  * s-m: Audacious のみ表示（Emacs はそのまま）．Audacious が起動していない場合は起動して表示．
  * s-n: 次のウインドウにフォーカス.
  * s-p: 前のウインドウにフォーカス．
- * s-r: Radio Tray を起動する．
  * s-s: Sylpheed のみ表示（Emacs はそのまま）．Sylpheed が起動していない場合は起動して表示．
  * s-w: Firefox のみ表示（Emacs はそのまま）．Firefox が起動していない場合は起動して表示．
  * s-Return: evilvte を起動する．
@@ -96,7 +94,7 @@ Split layout
 Tasklist
 --------
 
-通常の awesome の tasklist と違い，タグの selected に関係なく全てのプログラムが表示されます．ただし，Emacs, Firefox, Sylpheed, Audacious は表示されません．プログラム名の前には，そのプログラムのタグ番号が表示され，selected なものは明るく，さらにフォーカスのあるものはプログラム名が黄色で表示されます．
+通常の awesome の tasklist と違い，タグの selected に関係なく全てのプログラムが表示されます．ただし，Emacs, Firefox, Sylpheed, Audacious は表示されません．ただし，Firefox, Sylpheed については，2つ目以降のウインドウにはタグが割り合てられます．プログラム名の前には，そのプログラムのタグ番号が表示され，selected なものは明るく，さらにフォーカスのあるものはプログラム名が黄色で表示されます．
 
 alsasetup.py
 ------------
