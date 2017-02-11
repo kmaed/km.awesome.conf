@@ -59,9 +59,9 @@ local function tasklist_label(c, args)
     if c:tags()[1].selected then
         bg = bg_selected
         if capi.client.focus == c and fg_focus then
-           text = text .. "<span color='"..util.color_strip_alpha(fg_focus).."'>"..name.."</span>"
+           text = text .. "<span color='"..fg_focus.."'>"..name.."</span>"
         elseif fg_selected then
-           text = text .. "<span color='"..util.color_strip_alpha(fg_selected).."'>"..name.."</span>"
+           text = text .. "<span color='"..fg_selected.."'>"..name.."</span>"
         else
            text = text .. name
         end
@@ -158,7 +158,7 @@ end
 -- @return true if c is in a selected tag on screen, false otherwise
 function tasklist.filter.currenttags(c, screen)
    -- Only print client on the same screen as this widget
-    if c.screen ~= screen then return end
+    -- if c.screen ~= screen then return end
     -- Include sticky client too
     if c.sticky then return widget_tasklist_label_common(c, args) end
     local tags = tag.gettags(screen)

@@ -69,8 +69,8 @@ local layouts = {
 
 local tags = awful.tag({'Editor', 'Web', 'Mail', 'Music', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'}, s, layouts[1])
 
-awful.tag.viewonly(tags[1])
-awful.tag.setnmaster(1, tags[1])
+tags[1]:view_only()
+beautiful.master_count = 1
 
 for i = 2, 14 do
    awful.tag.setnmaster(0, tags[i])
@@ -87,7 +87,7 @@ et:connect_signal("timeout", function() et:stop(); setemacsatmaster() end)
 
 local function launchprogram(program, tagnum)
    if #tags[tagnum]:clients() == 0 then
-      awful.util.spawn(program)
+      awful.spawn(program)
       tags[tagnum].selected = true
       if tagnum == 1 then
          et:start()
@@ -122,7 +122,7 @@ local function movetotag(tagnum)
       and client.focus:tags()[1] ~= tags[3]
       and client.focus:tags()[1] ~= tags[4] then
       local focus = client.focus
-      awful.client.movetotag(tags[tagnum])
+      client.focus:move_totag(tags[tagnum])
       tags[tagnum].selected = true
       client.focus = focus
    end
@@ -141,14 +141,14 @@ local autorun = {
 }
 
 for app = 1, #autorun do
-   awful.util.spawn(autorun[app])
+   awful.spawn(autorun[app])
 end
 
-local waw = screen[1].workarea.width
+local waw = awful.screen.focused().workarea.width
 local ew = 615
 if waw < 1700 then ew = 530 end
 for i = 1, 14 do
-   awful.tag.setmwfact(ew/waw, tags[i])
+   tags[i].master_width_factor = ew/waw
 end
 if 1-ew/(waw-ew) >= 0 then
    kmawesome.layout.split.setfact(1-ew/(waw-ew))
@@ -158,7 +158,7 @@ else
 end
 mouse.coords({x = 3000, y = 2000})
 
-local mytextclock = awful.widget.textclock('%a %b %d, %Y; %H:%M:%S', 0.1)
+local mytextclock = wibox.widget.textclock('%a %b %d, %Y; %H:%M:%S', 0.1)
 
 local memwidget = awful.widget.graph()
 memwidget:set_width(32)
@@ -166,7 +166,6 @@ memwidget:set_height(16)
 memwidget:set_background_color('#494B4F')
 memwidget:set_border_color('#000000')
 memwidget:set_color('#AECF96')
---memwidget:set_gradient_colors({ '#AECF96', '#88A175', '#FF5656' })
 vicious.register(memwidget, vicious.widgets.mem, '$1', 1)
 
 local cpuwidget = awful.widget.graph()
@@ -175,7 +174,6 @@ cpuwidget:set_height(16)
 cpuwidget:set_background_color('#494B4F')
 cpuwidget:set_color('#FF5656')
 cpuwidget:set_border_color('#000000')
---cpuwidget:set_gradient_colors({ '#FF5656', '#88A175', '#AECF96' })
 vicious.register(cpuwidget, vicious.widgets.cpu, '$1', 1)
 
 -- http://awesome.naquadah.org/wiki/Acpitools-based_battery_widget
@@ -261,16 +259,16 @@ layout:set_right(right_layout)
 mywibox:set_widget(layout)
 
 local globalkeys = awful.util.table.join(
-   awful.key({}, 'XF86AudioLowerVolume', function () awful.util.spawn('amixer set Master 1-') end),
-   awful.key({}, 'XF86AudioMute', function () awful.util.spawn('amixer set Master toggle') end),
-   awful.key({}, 'XF86AudioRaiseVolume', function () awful.util.spawn('amixer set Master 1+') end),
-   awful.key({}, 'XF86Display', function () awful.util.spawn('/home/kmaeda/vga.sh') end),
-   awful.key({}, 'XF86ScreenSaver', function () awful.util.spawn('xscreensaver-command -lock') end),
-   awful.key({}, 'XF86Sleep', function () awful.util.spawn(sleepcommand) end),
+   awful.key({}, 'XF86AudioLowerVolume', function () awful.spawn('amixer set Master 1-') end),
+   awful.key({}, 'XF86AudioMute', function () awful.spawn('amixer set Master toggle') end),
+   awful.key({}, 'XF86AudioRaiseVolume', function () awful.spawn('amixer set Master 1+') end),
+   awful.key({}, 'XF86Display', function () awful.spawn('/home/kmaeda/vga.sh') end),
+   awful.key({}, 'XF86ScreenSaver', function () awful.spawn('xscreensaver-command -lock') end),
+   awful.key({}, 'XF86Sleep', function () awful.spawn(sleepcommand) end),
 
    -- ScrLk means 'Screen_Lock', not 'Scroll_Lock'.
-   awful.key({}, 'Scroll_Lock', function () awful.util.spawn('xscreensaver-command -lock') end),
-   awful.key({}, 'Cancel', function () awful.util.spawn(sleepcommand) end),
+   awful.key({}, 'Scroll_Lock', function () awful.spawn('xscreensaver-command -lock') end),
+   awful.key({}, 'Cancel', function () awful.spawn(sleepcommand) end),
 
    awful.key({modkey}, 'e', function () launchprogram(editor, 1); tags[1].selected = true; setemacsatmaster(); if tags[1]:clients()[1] then client.focus = tags[1]:clients()[1] end end),
    awful.key({modkey}, 'm', function () launchprogram(musicplayer, 4); tagviewonly(4); setemacsatmaster() end),
@@ -278,31 +276,31 @@ local globalkeys = awful.util.table.join(
    awful.key({modkey}, 'p', function () awful.client.focus.byidx(-1); if client.focus then client.focus:raise() end end),
    awful.key({modkey}, 's', function () launchprogram(mua, 3); tagviewonly(3); setemacsatmaster() end),
    awful.key({modkey}, 'w', function () launchprogram(webbrowser, 2); tagviewonly(2); setemacsatmaster() end),
-   awful.key({modkey}, '-', function () awful.util.spawn('amixer set Master 1-') end),
-   awful.key({modkey}, '=', function () awful.util.spawn('amixer set Master 1+') end),
-   awful.key({modkey}, 'Return', function () awful.util.spawn(terminal) end),
+   awful.key({modkey}, '-', function () awful.spawn('amixer set Master 1-') end),
+   awful.key({modkey}, '=', function () awful.spawn('amixer set Master 1+') end),
+   awful.key({modkey}, 'Return', function () awful.spawn(terminal) end),
    awful.key({modkey}, 'space', function () awful.layout.inc(layouts, 1) end),
 
    awful.key({modkey, shiftkey}, 'n', function () awful.client.swap.byidx(1) end),
    awful.key({modkey, shiftkey}, 'p', function () awful.client.swap.byidx(-1) end),
 
-   awful.key({modkey, controlkey}, 'b', function () awful.util.spawn('audtool playlist-advance') end),
-   awful.key({modkey, controlkey}, 'c', function () awful.util.spawn('audtool playlist-clear') end),
+   awful.key({modkey, controlkey}, 'b', function () awful.spawn('audtool playlist-advance') end),
+   awful.key({modkey, controlkey}, 'c', function () awful.spawn('audtool playlist-clear') end),
    awful.key({modkey, controlkey}, 'e', function () tagtoggle(1); launchprogram(editor, 1); setemacsatmaster() end),
    awful.key({modkey, controlkey}, 'm', function () tagtoggle(4); launchprogram(musicplayer, 4); setemacsatmaster() end),
    awful.key({modkey, controlkey}, 'n', function () kmawesome.layout.split.incfact(0.01) end),
    awful.key({modkey, controlkey}, 'p', function () kmawesome.layout.split.incfact(-0.01) end),
    awful.key({modkey, controlkey}, 'r', awesome.restart),
    awful.key({modkey, controlkey}, 's', function () tagtoggle(3); launchprogram(mua, 3); setemacsatmaster() end),
-   awful.key({modkey, controlkey}, 'v', function () awful.util.spawn('audtool playback-stop') end),
+   awful.key({modkey, controlkey}, 'v', function () awful.spawn('audtool playback-stop') end),
    awful.key({modkey, controlkey}, 'w', function () tagtoggle(2); launchprogram(webbrowser, 2); setemacsatmaster() end),
-   awful.key({modkey, controlkey}, 'x', function () awful.util.spawn('audtool playback-play') end),
-   awful.key({modkey, controlkey}, 'z', function () awful.util.spawn('audtool playlist-reverse') end)
+   awful.key({modkey, controlkey}, 'x', function () awful.spawn('audtool playback-play') end),
+   awful.key({modkey, controlkey}, 'z', function () awful.spawn('audtool playlist-reverse') end)
 )
 
 local clientkeys = awful.util.table.join(
    awful.key({modkey}, 'c', function (c) c:kill() end),
-   awful.key({modkey, controlkey}, 'space', awful.client.floating.toggle),
+   awful.key({modkey, controlkey}, 'space', function() client.focus.floating = not client.focus.floating end),
    awful.key({modkey, controlkey}, 'Return', function (c) c:swap(awful.client.getmaster()) end))
 
 for i = 0, 9 do
@@ -370,7 +368,7 @@ client.connect_signal("manage",
                      end
 
                      if c:tags()[1] == tags[2] and #tags[2]:clients() > 1 then
-                        awful.client.floating.set(c, true)
+                        c.floating = true
                         assignnewtag(c)
                      end
 
@@ -400,4 +398,4 @@ client.connect_signal("unfocus",
                      end
                   end)
 
-awful.util.spawn(xcompmgr)
+awful.spawn(xcompmgr)
