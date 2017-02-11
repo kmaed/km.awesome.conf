@@ -122,7 +122,7 @@ local function movetotag(tagnum)
       and client.focus:tags()[1] ~= tags[3]
       and client.focus:tags()[1] ~= tags[4] then
       local focus = client.focus
-      client.focus:move_totag(tags[tagnum])
+      client.focus:move_to_tag(tags[tagnum])
       tags[tagnum].selected = true
       client.focus = focus
    end
