@@ -98,7 +98,7 @@ Split layout
 Tasklist
 --------
 
-通常の awesome の tasklist と違い，タグの selected に関係なく全てのプログラムが表示されます．ただし，Emacs, Firefox, Sylpheed, Audacious は表示されません．ただし，Firefox, Sylpheed については，2つ目以降のウインドウにはタグが割り合てられます．プログラム名の前には，そのプログラムのタグ番号が表示され，selected なものは明るく，さらにフォーカスのあるものはプログラム名が黄色で表示されます．
+通常の awesome の tasklist と違い，タグの selected に関係なく全てのプログラムが表示されます．ただし，Emacs, Firefox, Sylpheed, Audacious は表示されません．Firefox, Sylpheed については，2つ目以降のウインドウにはタグが割り合てられます．プログラム名の前には，そのプログラムのタグ番号が表示され，selected なものは明るく，さらにフォーカスのあるものはプログラム名が黄色で表示されます．
 
 alsasetup.py
 ------------
