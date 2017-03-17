@@ -1,3 +1,4 @@
+local screen = require("awful.screen")
 local tag = require("awful.tag")
 local layout = require("awful.layout")
 local math = math
@@ -55,11 +56,12 @@ end
 
 
 local function arrange_entry(param, dir)
+   local t = screen.focused().selected_tag
    local cls = param.clients
-   local nmaster = math.min(tag.getnmaster(t), #cls)
+   local nmaster = math.min(t.master_count, #cls)
    local nother = math.max(#cls - nmaster,0)
 
-   local mwfact = tag.getmwfact(t)
+   local mwfact = t.master_width_factor
    local wa = param.workarea
 
    local mwa = {

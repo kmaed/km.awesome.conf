@@ -44,7 +44,7 @@ local function tasklist_label(c, args)
     local font = args.font or theme.tasklist_font or theme.font or ""
     local bg = nil
     local text = "<span font_desc='"..font.."'>"
-    local tags = tag.gettags(c.screen)
+    local tags = c.screen.tags
     local name = ""
 
     name = util.escape(c.name) or util.escape("<untitled>")
@@ -161,7 +161,7 @@ function tasklist.filter.currenttags(c, screen)
     -- if c.screen ~= screen then return end
     -- Include sticky client too
     if c.sticky then return widget_tasklist_label_common(c, args) end
-    local tags = tag.gettags(screen)
+    local tags = c.screen.tags
     for k, t in ipairs(tags) do
        if t ~= tags[1]
           and t ~= tags[2]
@@ -189,7 +189,7 @@ function tasklist.filter.minimizedcurrenttags(c, screen)
     if c.sticky then return true end
     -- Check client is minimized
     if not c.minimized then return false end
-    local tags = tag.gettags(screen)
+    local tags = c.screen.tags
     for k, t in ipairs(tags) do
         -- Select only minimized clients
         if t.selected then

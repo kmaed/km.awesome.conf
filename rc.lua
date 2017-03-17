@@ -7,6 +7,7 @@ require('awful.autofocus')
 local beautiful = require('beautiful')
 local naughty = require('naughty')
 local wibox = require('wibox')
+local gears = require('gears')
 
 -- http://git.sysphere.org/vicious/
 local vicious = require('vicious')
@@ -73,7 +74,7 @@ tags[1]:view_only()
 beautiful.master_count = 1
 
 for i = 2, 14 do
-   awful.tag.setnmaster(0, tags[i])
+   tags[i].master_count = 0
 end
 
 local function setemacsatmaster()
@@ -82,15 +83,12 @@ local function setemacsatmaster()
    end
 end
 
-local et = timer({ timeout = 1 })
-et:connect_signal("timeout", function() et:stop(); setemacsatmaster() end)
-
 local function launchprogram(program, tagnum)
    if #tags[tagnum]:clients() == 0 then
       awful.spawn(program)
       tags[tagnum].selected = true
       if tagnum == 1 then
-         et:start()
+         gears.timer.start_new(1, function() et:stop(); setemacsatmaster() end)
       end
    end
 end
@@ -160,7 +158,7 @@ mouse.coords({x = 3000, y = 2000})
 
 local mytextclock = wibox.widget.textclock('%a %b %d, %Y; %H:%M:%S', 0.1)
 
-local memwidget = awful.widget.graph()
+local memwidget = wibox.widget.graph()
 memwidget:set_width(32)
 memwidget:set_height(16)
 memwidget:set_background_color('#494B4F')
@@ -168,7 +166,7 @@ memwidget:set_border_color('#000000')
 memwidget:set_color('#AECF96')
 vicious.register(memwidget, vicious.widgets.mem, '$1', 1)
 
-local cpuwidget = awful.widget.graph()
+local cpuwidget = wibox.widget.graph()
 cpuwidget:set_width(32)
 cpuwidget:set_height(16)
 cpuwidget:set_background_color('#494B4F')
@@ -207,11 +205,7 @@ function battery_status ()
 end
 if os.execute("acpitool") == 0 then
    mybattmon:set_markup(" " .. battery_status() .. " ")
-   my_battmon_timer=timer({timeout=30})
-   my_battmon_timer:connect_signal("timeout", function()
-                                                 mybattmon:set_markup(" " .. battery_status() .. " ")
-                                          end)
-   my_battmon_timer:start()
+   mybattomon_timer = gears.timer.start_new(30, function() mybattmon:set_markup(" " .. battery_status() .. " "); return true end)
 end
 
 local mysensors = wibox.widget.textbox()
@@ -232,14 +226,10 @@ end
 
 if os.execute('sensors') == 0 then
    mysensors:set_markup(" " .. sensors_status() .. " ")
-   my_sensors_timer=timer({timeout=10})
-   my_sensors_timer:connect_signal("timeout", function()
-                                                 mysensors:set_markup(" " .. sensors_status() .. " ")
-                                          end)
-   my_sensors_timer:start()
+   gears.timer.start_new(10, function() mysensors:set_markup(" " .. sensors_status() .. " "); return true end)
 end
 
-local mywibox = awful.wibox({position = 'top', height=16})
+local mywibar = awful.wibar({position = 'top', height=16})
 
 local left_layout = wibox.layout.fixed.horizontal()
 left_layout:add(cpuwidget)
@@ -256,7 +246,7 @@ layout:set_left(left_layout)
 layout:set_middle(kmawesome.widget.tasklist(1, kmawesome.widget.tasklist.filter.currenttags))
 layout:set_right(right_layout)
 
-mywibox:set_widget(layout)
+mywibar:set_widget(layout)
 
 local globalkeys = awful.util.table.join(
    awful.key({}, 'XF86AudioLowerVolume', function () awful.spawn('amixer set Master 1-') end),
@@ -393,7 +383,7 @@ client.connect_signal("focus",
 client.connect_signal("unfocus",
                   function(c)
                      c.border_color = beautiful.border_normal
-                     if not awful.client.floating.get(c) then
+                     if not c.floating then
                         c.opacity = 0.5
                      end
                   end)
