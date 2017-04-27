@@ -182,9 +182,9 @@ function battery_status ()
    local fd=io.popen("acpitool -b", "r") --list present batteries
    local line=fd:read()
    while line do --there might be several batteries.
-      local battery_num = string.match(line, "Battery \#(%d+)")
-      local battery_load = string.match(line, " (%d*\.%d+)%%")
-      local time_rem = string.match(line, "(%d+\:%d+)\:%d+")
+      local battery_num = string.match(line, "Battery #(%d+)")
+      local battery_load = string.match(line, " (%d*.%d+)%%")
+      local time_rem = string.match(line, "(%d+:%d+):%d+")
       if time_rem == "00:00" then time_rem = nil end
       local discharging
       if string.match(line, "discharging")=="discharging" then --discharging: always red
