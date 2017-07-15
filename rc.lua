@@ -22,7 +22,7 @@ local modkey = 'Mod4'
 local shiftkey = 'Shift'
 local controlkey = 'Control'
 
-local terminal = 'evilvte'
+local terminal = 'st'
 local editor = 'sh -c "XMODIFIERS=@im=none emacs"'
 local webbrowser = 'firefox'
 local mua = 'sylpheed'

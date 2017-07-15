@@ -22,7 +22,7 @@ kmaedaさんの生態
  * Firefox: Web ブラウザ
  * Sylpheed: MUA
  * Audacious: 音楽プレイヤー
- * evilvte: 端末
+ * st: 端末
  * zathura & Evince: PDF ビューワ
 
 以上に加えて，たまに
@@ -60,7 +60,7 @@ Emacs 使いなので，デフォルトの vi 風から Emacs 風に変更して
  * s-p: 前のウインドウにフォーカス．
  * s-s: Sylpheed のみ表示（Emacs はそのまま）．Sylpheed が起動していない場合は起動して表示．
  * s-w: Firefox のみ表示（Emacs はそのまま）．Firefox が起動していない場合は起動して表示．
- * s-Return: evilvte を起動する．
+ * s-Return: st を起動する．
  * s-space: layout を切り替える（実質的に全画面表示）．
  * s-Shift-1, s-Shift-2, ..., s-Shift-9, s-Shift-0: それぞれの番号のタグへとフォーカスのあるウインドウを移動する．ただし，Emacs, Firefox, Sylpheed, Audacious を移動することはできない．
  * s-Shift-n: 現在フォーカスのあるウインドウのインデックスを +1 する．
