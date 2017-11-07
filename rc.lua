@@ -290,7 +290,7 @@ local globalkeys = awful.util.table.join(
 
 local clientkeys = awful.util.table.join(
    awful.key({modkey}, 'c', function (c) c:kill() end),
-   awful.key({modkey, controlkey}, 'space', function() client.focus.floating = not client.focus.floating end),
+   awful.key({modkey, controlkey}, 'space', function(c) c.maximized = false; c.maximized_vertical=false; c.maximized_horizontal=false; c:raise(); client.focus.floating = not client.focus.floating end),
    awful.key({modkey, controlkey}, 'Return', function (c) c:swap(awful.client.getmaster()) end))
 
 for i = 0, 9 do
