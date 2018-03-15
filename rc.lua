@@ -1,5 +1,5 @@
 -- kmawesome: My configuration of awesome window manager
--- Copyright (c) 2012-2017 Kazuki Maeda <kmaeda@kmaeda.net>
+-- Copyright (c) 2012-2018 Kazuki Maeda <kmaeda@kmaeda.net>
 
 local awful = require('awful')
 awful.rules = require('awful.rules')
@@ -24,9 +24,9 @@ local controlkey = 'Control'
 
 local terminal = 'st -e tmux'
 local editor = 'sh -c "XMODIFIERS=@im=none emacs"'
-local webbrowser = 'firefox'
-local mua = 'sylpheed'
-local musicplayer = 'audacious'
+local webbrowser = 'sh -c "LANG=ja_JP.UTF-8 firefox"'
+local mua = 'sh -c "LANG=ja_JP.UTF-8 sylpheed"'
+local musicplayer = 'sh -c "LANG=ja_JP.UTF-8 audacious"'
 local xsetb = 'xset -b'
 local xsetr = 'xset r rate 250 25'
 local xmodmap = 'xmodmap /home/kmaeda/.Xmodmap'
