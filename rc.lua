@@ -256,7 +256,7 @@ local globalkeys = awful.util.table.join(
    awful.key({}, 'XF86ScreenSaver', function () awful.spawn('xscreensaver-command -lock') end),
    awful.key({}, 'XF86Sleep', function () awful.spawn(sleepcommand) end),
    awful.key({}, 'XF86MonBrightnessUp', function () awful.spawn('xbacklight +10') end),
-   awful.key({}, 'XF86MonBrightnessDown', function () awful.spawn('xbacklight -0') end),
+   awful.key({}, 'XF86MonBrightnessDown', function () awful.spawn('xbacklight -10') end),
 
    -- ScrLk means 'Screen_Lock', not 'Scroll_Lock'.
    awful.key({}, 'Scroll_Lock', function () awful.spawn('xscreensaver-command -lock') end),
