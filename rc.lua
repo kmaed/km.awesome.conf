@@ -255,12 +255,13 @@ local globalkeys = awful.util.table.join(
    awful.key({}, 'XF86Display', function () awful.spawn('/home/kmaeda/vga.sh') end),
    awful.key({}, 'XF86ScreenSaver', function () awful.spawn('xscreensaver-command -lock') end),
    awful.key({}, 'XF86Sleep', function () awful.spawn(sleepcommand) end),
-   awful.key({modkey}, 'o', function () awful.spawn('xscreensaver-command -lock') end),
    awful.key({}, 'XF86MonBrightnessUp', function () awful.spawn('xbacklight +10') end),
    awful.key({}, 'XF86MonBrightnessDown', function () awful.spawn('xbacklight -10') end),
 
    -- ScrLk means 'Screen_Lock', not 'Scroll_Lock'.
    awful.key({}, 'Scroll_Lock', function () awful.spawn('xscreensaver-command -lock') end),
+   awful.key({modkey}, 'o', function () awful.spawn('xscreensaver-command -lock') end),
+   awful.key({modkey, controlkey}, 'o', function () awful.spawn(sleepcommand) end),
    awful.key({}, 'Cancel', function () awful.spawn(sleepcommand) end),
 
    awful.key({modkey}, 'e', function () launchprogram(editor, 1); tags[1].selected = true; setemacsatmaster(); if tags[1]:clients()[1] then client.focus = tags[1]:clients()[1] end end),
