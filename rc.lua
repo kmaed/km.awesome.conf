@@ -38,7 +38,7 @@ local nmapplet = 'sh -c "pgrep nm-applet || LANG=ja_JP.UTF_8 nm-applet"'
 local polkitgnome = '/usr/libexec/polkit-gnome-authentication-agent-1'
 local alsasetup = 'sh -c "~/alsasetup.py > ~/.asoundrc"'
 local sleepcommand = "sh -c 'echo mem > /sys/power/state || echo standby > /sys/power/state'"
-
+local xinputcommand = "sh -c 'xinput --set-prop 10 \"Device Enabled\" 0; xinput --set-prop 11 \"libinput Accel Speed\" -0.75'"
 
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
@@ -136,6 +136,7 @@ local autorun = {
    ibus,
    nmapplet,
    polkitgnome,
+   xinputcommand,
 }
 
 for app = 1, #autorun do
