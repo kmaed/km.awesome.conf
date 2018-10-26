@@ -38,7 +38,7 @@ local nmapplet = 'sh -c "pgrep nm-applet || LANG=ja_JP.UTF_8 nm-applet"'
 local polkitgnome = '/usr/libexec/polkit-gnome-authentication-agent-1'
 local alsasetup = 'sh -c "~/alsasetup.py > ~/.asoundrc"'
 local sleepcommand = "sh -c 'echo mem > /sys/power/state || echo standby > /sys/power/state'"
-local xinputcommand = "sh -c 'xinput --set-prop 10 \"Device Enabled\" 0; xinput --set-prop 11 \"libinput Accel Speed\" -0.75'"
+local xinputcommand = "sh -c 'xinput --set-prop 10 \"Device Enabled\" 0; xinput --set-prop 11 \"libinput Accel Speed\" -0.5'"
 
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
@@ -327,6 +327,8 @@ awful.rules.rules = {
    { rule = { class = "Emacs" },
      properties = { tag = tags[1] } },
    { rule = { class = "Firefox" },
+     properties = { tag = tags[2] } },
+   { rule = { class = "Nightly" },
      properties = { tag = tags[2] } },
    { rule = { class = "Sylpheed" },
      properties = { tag = tags[3] } },
