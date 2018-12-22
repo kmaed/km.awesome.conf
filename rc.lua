@@ -157,7 +157,7 @@ else
 end
 mouse.coords({x = 3000, y = 2000})
 
-local mytextclock = wibox.widget.textclock('%a %b %d, %Y; %H:%M:%S', 0.1)
+local mytextclock = wibox.widget.textclock('%a %b %d, %Y; %H:%M:%S', 0.1, 'Asia/Tokyo')
 
 local memwidget = wibox.widget.graph()
 memwidget:set_width(32)
