@@ -24,7 +24,8 @@ local controlkey = 'Control'
 
 local terminal = 'st -e tmux'
 local editor = 'sh -c "XMODIFIERS=@im=none emacs"'
-local webbrowser = 'sh -c "LANG=ja_JP.UTF-8 firefox"'
+local webbrowser = 'sh -c "LANG=ja_JP.UTF-8 luakit"'
+local firefox = 'sh -c "LANG=ja_JP.UTF-8 firefox"'
 local mua = 'sh -c "LANG=ja_JP.UTF-8 sylpheed"'
 local musicplayer = 'sh -c "LANG=ja_JP.UTF-8 audacious"'
 local xsetb = 'xset -b'
@@ -266,6 +267,7 @@ local globalkeys = awful.util.table.join(
    awful.key({}, 'Cancel', function () awful.spawn(sleepcommand) end),
 
    awful.key({modkey}, 'e', function () launchprogram(editor, 1); tags[1].selected = true; setemacsatmaster(); if tags[1]:clients()[1] then client.focus = tags[1]:clients()[1] end end),
+   awful.key({modkey}, 'f', function () awful.spawn(firefox) end),
    awful.key({modkey}, 'm', function () launchprogram(musicplayer, 4); tagviewonly(4); setemacsatmaster() end),
    awful.key({modkey}, 'n', function () awful.client.focus.byidx(1); if client.focus then client.focus:raise() end end),
    awful.key({modkey}, 'p', function () awful.client.focus.byidx(-1); if client.focus then client.focus:raise() end end),
@@ -326,9 +328,7 @@ awful.rules.rules = {
                     maximized_horizontal = false }},
    { rule = { class = "Emacs" },
      properties = { tag = tags[1] } },
-   { rule = { class = "Firefox" },
-     properties = { tag = tags[2] } },
-   { rule = { class = "Nightly" },
+   { rule = { class = "Luakit" },
      properties = { tag = tags[2] } },
    { rule = { class = "Sylpheed" },
      properties = { tag = tags[3] } },
