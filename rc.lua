@@ -1,5 +1,5 @@
 -- kmawesome: My configuration of awesome window manager
--- Copyright (c) 2012-2018 Kazuki Maeda <kmaeda@kmaeda.net>
+-- Copyright (c) 2012-2019 Kazuki Maeda <kmaeda@kmaeda.net>
 
 local awful = require('awful')
 awful.rules = require('awful.rules')
