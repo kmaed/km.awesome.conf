@@ -94,6 +94,11 @@ Tasklist
 
 通常の awesome の tasklist と違い，タグの selected に関係なく全てのプログラムが表示されます．ただし，Emacs, Luakit, Sylpheed, Audacious は表示されません．Luakit, Sylpheed については，2つ目以降のウインドウにはタグが割り合てられます．プログラム名の前には，そのプログラムのタグ番号が表示され，selected なものは明るく，さらにフォーカスのあるものはプログラム名が黄色で表示されます．
 
+License
+-------
+
+GNU General Publice License v2 or later.
+
 意見・要望など
 -------------
 
