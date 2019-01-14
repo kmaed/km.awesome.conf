@@ -1,4 +1,4 @@
--- Modified version of awful.widget.tasklist for kmawesome
+-- A modified version of awful.widget.tasklist for kmawesome
 -- Original information:
 ---------------------------------------------------------------------------
 -- @author Julien Danjou &lt;julien@danjou.info&gt;
@@ -28,6 +28,17 @@ local tasklist = { mt = {} }
 -- Public structures
 tasklist.filter = {}
 
+local function gettag(c)
+   local tags = c.screen.tags
+   local t = 100
+   for i = 5, 14 do
+      if c:tags()[1] == tags[i] then
+         t = i-4
+         return t
+      end
+   end
+end
+
 local function tasklist_label(c, args)
     if not args then args = {} end
     local theme = beautiful.get()
@@ -44,18 +55,12 @@ local function tasklist_label(c, args)
     local font = args.font or theme.tasklist_font or theme.font or ""
     local bg = nil
     local text = "<span font_desc='"..font.."'>"
-    local tags = c.screen.tags
     local name = ""
 
     name = util.escape(c.name) or util.escape("<untitled>")
-    for i = 5, 14 do
-       if c:tags()[1] == tags[i] then
-          local j
-          if i == 14 then j = 0 else j = i-4 end
-          name = '[' .. j .. '] ' .. name
-          break
-       end
-    end
+    local t = gettag(c)
+    if t == 10 then t = 0 end
+    name = '[' .. t .. '] ' .. name
     if c:tags()[1].selected then
         bg = bg_selected
         if capi.client.focus == c and fg_focus then
@@ -81,6 +86,7 @@ local function tasklist_update(s, w, buttons, filter, data, style)
             table.insert(clients, c)
         end
     end
+    table.sort(clients, function(a, b) return gettag(a) < gettag(b) end)
 
     local function label(c) return tasklist_label(c, style) end
 
