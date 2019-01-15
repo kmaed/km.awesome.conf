@@ -34,9 +34,9 @@ local function gettag(c)
    for i = 5, 14 do
       if c:tags()[1] == tags[i] then
          t = i-4
-         return t
       end
    end
+   return t
 end
 
 local function tasklist_label(c, args)
