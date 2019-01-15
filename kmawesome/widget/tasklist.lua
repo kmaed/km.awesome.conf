@@ -59,8 +59,10 @@ local function tasklist_label(c, args)
 
     name = util.escape(c.name) or util.escape("<untitled>")
     local t = gettag(c)
-    if t == 10 then t = 0 end
-    name = '[' .. t .. '] ' .. name
+    if t then
+       if t == 10 then t = 0 end
+       name = '[' .. t .. '] ' .. name
+    end
     if c:tags()[1].selected then
         bg = bg_selected
         if capi.client.focus == c and fg_focus then
