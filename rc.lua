@@ -25,7 +25,7 @@ local controlkey = 'Control'
 local terminal = 'st -e tmux'
 local editor = 'sh -c "XMODIFIERS=@im=none emacs"'
 local webbrowser = 'sh -c "LANG=ja_JP.UTF-8 luakit"'
-local firefox = 'sh -c "LANG=ja_JP.UTF-8 firefox"'
+local firefox = 'sh -c "LANG=ja_JP.UTF-8 firefox --allow-downgrade"'
 local mua = 'sh -c "LANG=ja_JP.UTF-8 sylpheed"'
 local musicplayer = 'sh -c "LANG=ja_JP.UTF-8 audacious"'
 local xsetb = 'xset -b'
@@ -39,7 +39,7 @@ local nmapplet = 'sh -c "pgrep nm-applet || LANG=ja_JP.UTF_8 nm-applet"'
 local polkitgnome = '/usr/libexec/polkit-gnome-authentication-agent-1'
 local alsasetup = 'sh -c "~/alsasetup.py > ~/.asoundrc"'
 local sleepcommand = "sh -c 'echo mem > /sys/power/state || echo standby > /sys/power/state'"
-local xinputcommand = "sh -c 'xinput --set-prop 10 \"Device Enabled\" 0; xinput --set-prop 11 \"libinput Accel Speed\" -0.5'"
+local xinputcommand = "sh -c 'xinput --set-prop 10 \"Device Enabled\" 0; xinput --set-prop 11 \"libinput Accel Speed\" -0.25'"
 
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
@@ -138,6 +138,7 @@ local autorun = {
    nmapplet,
    polkitgnome,
    xinputcommand,
+   editor,
 }
 
 for app = 1, #autorun do
