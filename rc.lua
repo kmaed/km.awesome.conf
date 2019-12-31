@@ -24,8 +24,8 @@ local controlkey = 'Control'
 
 local terminal = 'st -e tmux'
 local editor = 'sh -c "XMODIFIERS=@im=none emacs"'
-local webbrowser = 'sh -c "LANG=ja_JP.UTF-8 luakit"'
-local firefox = 'sh -c "LANG=ja_JP.UTF-8 firefox --allow-downgrade"'
+local webbrowser = 'sh -c "LANG=ja_JP.UTF-8 GTK_THEME=Adwaita:light luakit"'
+local firefox = 'sh -c "LANG=ja_JP.UTF-8 GTK_THEME=Adwaita:light firefox --allow-downgrade"'
 local mua = 'sh -c "LANG=ja_JP.UTF-8 sylpheed"'
 local musicplayer = 'sh -c "LANG=ja_JP.UTF-8 audacious"'
 local xsetb = 'xset -b'
@@ -37,9 +37,9 @@ local xscreensaver = 'xscreensaver -no-splash'
 local ibus = 'ibus-daemon --xim'
 local nmapplet = 'sh -c "pgrep nm-applet || LANG=ja_JP.UTF_8 nm-applet"'
 local polkitgnome = '/usr/libexec/polkit-gnome-authentication-agent-1'
-local alsasetup = 'sh -c "~/alsasetup.py > ~/.asoundrc"'
 local sleepcommand = "sh -c 'echo mem > /sys/power/state || echo standby > /sys/power/state'"
-local xinputcommand = "sh -c 'xinput --set-prop 10 \"Device Enabled\" 0; xinput --set-prop 11 \"libinput Accel Speed\" -0.25'"
+--local xinputcommand = "sh -c 'xinput --set-prop 10 \"Device Enabled\" 0; xinput --set-prop 11 \"libinput Accel Speed\" -0.1'"
+local xinputcommand = "sh -c 'xinput --set-prop 10 \"Device Enabled\" 0'"
 
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
@@ -133,7 +133,6 @@ local autorun = {
    hsetroot,
    xmodmap,
    xscreensaver,
-   alsasetup,
    ibus,
    nmapplet,
    polkitgnome,
@@ -258,8 +257,8 @@ local globalkeys = awful.util.table.join(
    awful.key({}, 'XF86Display', function () awful.spawn('/home/kmaeda/vga.sh') end),
    awful.key({}, 'XF86ScreenSaver', function () awful.spawn('xscreensaver-command -lock') end),
    awful.key({}, 'XF86Sleep', function () awful.spawn(sleepcommand) end),
-   awful.key({}, 'XF86MonBrightnessUp', function () awful.spawn('xbacklight +10') end),
-   awful.key({}, 'XF86MonBrightnessDown', function () awful.spawn('xbacklight -10') end),
+   awful.key({}, 'XF86MonBrightnessUp', function () awful.spawn('xbacklight +2') end),
+   awful.key({}, 'XF86MonBrightnessDown', function () awful.spawn('xbacklight -2') end),
 
    -- ScrLk means 'Screen_Lock', not 'Scroll_Lock'.
    awful.key({}, 'Scroll_Lock', function () awful.spawn('xscreensaver-command -lock') end),
