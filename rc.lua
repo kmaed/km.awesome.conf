@@ -35,7 +35,7 @@ local xmodmap = 'xmodmap /home/kmaeda/.Xmodmap'
 local xcompmgr = 'xcompmgr'
 local hsetroot = 'hsetroot -solid #000000'
 local xscreensaver = 'xscreensaver -no-splash'
-local ibus = 'ibus-daemon --xim'
+local ibus = 'ibus-daemon -dx'
 local nmapplet = 'sh -c "pgrep nm-applet || LANG=ja_JP.UTF_8 nm-applet"'
 local polkitgnome = '/usr/libexec/polkit-gnome-authentication-agent-1'
 local sleepcommand = "sh -c 'echo mem > /sys/power/state || echo standby > /sys/power/state'"
