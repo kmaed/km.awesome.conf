@@ -1,5 +1,5 @@
 -- km.awesome.conf: My configuration of awesome window manager
--- Copyright (c) 2012-2019 Kazuki Maeda <kmaeda@kmaeda.net>
+-- Copyright (c) 2012-2021 Kazuki Maeda <kmaeda@kmaeda.net>
 
 local awful = require('awful')
 awful.rules = require('awful.rules')
@@ -27,6 +27,7 @@ local editor = 'sh -c "XMODIFIERS=@im=none emacs"'
 local webbrowser = 'sh -c "LANG=ja_JP.UTF-8 GTK_THEME=Adwaita:light luakit"'
 local firefox = 'sh -c "LANG=ja_JP.UTF-8 GTK_THEME=Adwaita:light firefox --allow-downgrade"'
 local mua = 'sh -c "LANG=ja_JP.UTF-8 sylpheed"'
+local slack = 'sh -c "LANG=ja_JP.UTF-8 slack"'
 local musicplayer = 'sh -c "LANG=ja_JP.UTF-8 audacious"'
 local xsetb = 'xset -b'
 local xsetr = 'xset r rate 250 25'
@@ -69,12 +70,12 @@ local layouts = {
    awful.layout.suit.max.fullscreen
 }
 
-local tags = awful.tag({'Editor', 'Web', 'Mail', 'Music', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'}, s, layouts[1])
+local tags = awful.tag({'Editor', 'Web', 'Mail', 'Music', 'Slack', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'}, s, layouts[1])
 
 tags[1]:view_only()
 beautiful.master_count = 1
 
-for i = 2, 14 do
+for i = 2, 15 do
    tags[i].master_count = 0
 end
 
@@ -104,7 +105,7 @@ end
 
 local function tagviewonly(tagnum)
    tags[tagnum].selected = true
-   for i = 2, 14 do
+   for i = 2, 15 do
       if i ~= tagnum then
          tags[i].selected = false
       end
@@ -119,7 +120,8 @@ local function movetotag(tagnum)
       and client.focus:tags()[1] ~= tags[1]
       and client.focus:tags()[1] ~= tags[2]
       and client.focus:tags()[1] ~= tags[3]
-      and client.focus:tags()[1] ~= tags[4] then
+      and client.focus:tags()[1] ~= tags[4]
+      and client.focus:tags()[1] ~= tags[5] then
       local focus = client.focus
       client.focus:move_to_tag(tags[tagnum])
       tags[tagnum].selected = true
@@ -147,7 +149,7 @@ end
 local waw = awful.screen.focused().workarea.width
 local ew = 615
 if waw < 1700 then ew = 530 end
-for i = 1, 14 do
+for i = 1, 15 do
    tags[i].master_width_factor = ew/waw
 end
 if 1-ew/(waw-ew) >= 0 then
@@ -272,6 +274,7 @@ local globalkeys = awful.util.table.join(
    awful.key({modkey}, 'n', function () awful.client.focus.byidx(1); if client.focus then client.focus:raise() end end),
    awful.key({modkey}, 'p', function () awful.client.focus.byidx(-1); if client.focus then client.focus:raise() end end),
    awful.key({modkey}, 's', function () launchprogram(mua, 3); tagviewonly(3); setemacsatmaster() end),
+   awful.key({modkey, shiftkey}, 's', function () launchprogram(slack, 5); tagviewonly(5); setemacsatmaster() end),
    awful.key({modkey}, 'w', function () launchprogram(webbrowser, 2); tagviewonly(2); setemacsatmaster() end),
    awful.key({modkey}, '-', function () awful.spawn('amixer set Master 1-') end),
    awful.key({modkey}, '=', function () awful.spawn('amixer set Master 1+') end),
@@ -289,6 +292,7 @@ local globalkeys = awful.util.table.join(
    awful.key({modkey, controlkey}, 'p', function () kmawesome.layout.split.incfact(-0.01) end),
    awful.key({modkey, controlkey}, 'r', awesome.restart),
    awful.key({modkey, controlkey}, 's', function () tagtoggle(3); launchprogram(mua, 3); setemacsatmaster() end),
+   awful.key({modkey, controlkey, shiftkey}, 's', function () tagtoggle(5); launchprogram(slack, 5); setemacsatmaster() end),
    awful.key({modkey, controlkey}, 'v', function () awful.spawn('audtool playback-stop') end),
    awful.key({modkey, controlkey}, 'w', function () tagtoggle(2); launchprogram(webbrowser, 2); setemacsatmaster() end),
    awful.key({modkey, controlkey}, 'x', function () awful.spawn('audtool playback-play') end),
@@ -302,7 +306,7 @@ local clientkeys = awful.util.table.join(
 
 for i = 0, 9 do
    local j
-   if i == 0 then j = 14 else j = i+4 end
+   if i == 0 then j = 15 else j = i+5 end
    globalkeys = awful.util.table.join(globalkeys,
                                       awful.key({modkey}, tostring(i), function () tagviewonly(j); setemacsatmaster() end),
                                       awful.key({modkey, controlkey}, tostring(i), function () awful.tag.viewtoggle(tags[j]); setemacsatmaster() end),
@@ -323,7 +327,7 @@ awful.rules.rules = {
                     focus = true,
                     keys = clientkeys,
                     buttons = clientbuttons,
-                    tag = tags[14],
+                    tag = tags[15],
                     maximized_vertical = false,
                     maximized_horizontal = false }},
    { rule = { class = "Emacs" },
@@ -334,6 +338,8 @@ awful.rules.rules = {
      properties = { tag = tags[3] } },
    { rule = { class = "Audacious" },
      properties = { tag = tags[4] } },
+   { rule = { class = "Slack" },
+     properties = { tag = tags[5] } },
    { rule = { class = "fontforge" },
      properties = { floating = true } },
    { rule = { class = "Gimp" },
@@ -341,7 +347,7 @@ awful.rules.rules = {
 }
 
 local function assignnewtag(c)
-   for i = 5, 13 do
+   for i = 6, 14 do
       if #tags[i]:clients() == 0 then
          c:tags({tags[i]})
          break
@@ -360,7 +366,7 @@ client.connect_signal("manage",
                      c.opacity = 0.5
                      if client.focus == c then c.opacity = 1 end
 
-                     if c:tags()[1] == tags[14] then
+                     if c:tags()[1] == tags[15] then
                         assignnewtag(c)
                      end
 
