@@ -26,7 +26,7 @@ local terminal = 'st -e tmux'
 local editor = 'sh -c "XMODIFIERS=@im=none emacs"'
 local webbrowser = 'sh -c "LANG=ja_JP.UTF-8 GTK_THEME=Adwaita:light luakit"'
 local firefox = 'sh -c "LANG=ja_JP.UTF-8 GTK_THEME=Adwaita:light firefox --allow-downgrade"'
-local mua = 'sh -c "LANG=ja_JP.UTF-8 sylpheed"'
+local mua = 'sh -c "LANG=ja_JP.UTF-8 claws-mail"'
 local slack = 'sh -c "LANG=ja_JP.UTF-8 GTK_IM_MODULE=xim slack"'
 local musicplayer = 'sh -c "LANG=ja_JP.UTF-8 audacious"'
 local xsetb = 'xset -b'
@@ -334,7 +334,7 @@ awful.rules.rules = {
      properties = { tag = tags[1] } },
    { rule = { class = "Luakit" },
      properties = { tag = tags[2] } },
-   { rule = { class = "Sylpheed" },
+   { rule = { class = "Claws-mail" },
      properties = { tag = tags[3] } },
    { rule = { class = "Audacious" },
      properties = { tag = tags[4] } },
