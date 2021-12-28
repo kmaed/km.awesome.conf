@@ -16,7 +16,7 @@
 
  * Emacs (with GTK+ 3): エディタ
  * Luakit（Firefox から移行中）: Web ブラウザ
- * Sylpheed: MUA
+ * Claws Mail: MUA
  * Audacious: 音楽プレイヤー
  * st: 端末
  * zathura & Evince: PDF ビューワ
@@ -46,11 +46,11 @@ Emacs 使いなので，デフォルトの vi 風から Emacs 風に変更して
  * s-m: Audacious のみ表示（Emacs はそのまま）．Audacious が起動していない場合は起動して表示．
  * s-n: 次のウインドウにフォーカス.
  * s-p: 前のウインドウにフォーカス．
- * s-s: Sylpheed のみ表示（Emacs はそのまま）．Sylpheed が起動していない場合は起動して表示．
+ * s-s: Claws Mail のみ表示（Emacs はそのまま）．Claws Mail が起動していない場合は起動して表示．
  * s-w: Luakit のみ表示（Emacs はそのまま）．Luakit が起動していない場合は起動して表示．
  * s-Return: st を起動する．
  * s-space: layout を切り替える（実質的に全画面表示）．
- * s-Shift-1, s-Shift-2, ..., s-Shift-9, s-Shift-0: それぞれの番号のタグへとフォーカスのあるウインドウを移動する．ただし，Emacs, Luakit, Sylpheed, Audacious を移動することはできない．
+ * s-Shift-1, s-Shift-2, ..., s-Shift-9, s-Shift-0: それぞれの番号のタグへとフォーカスのあるウインドウを移動する．ただし，Emacs, Luakit, Claws Mail, Audacious を移動することはできない．
  * s-Shift-n: 現在フォーカスのあるウインドウのインデックスを +1 する．
  * s-Shift-p: 現在フォーカスのあるウインドウのインデックスを -1 する．
  * C-s-1, C-s-2, ..., C-s-9, C-s-0: それぞれの番号のタグの表示を切り替える．
@@ -61,7 +61,7 @@ Emacs 使いなので，デフォルトの vi 風から Emacs 風に変更して
  * C-s-n: split layout のとき，前にあるウインドウの表示比率を大きくする．
  * C-s-p: split layout のとき，前にあるウインドウの表示比率を小さくする．
  * C-s-r: awesome を再起動する．
- * C-s-s: Sylpheed の表示を切り替える．Sylpheed が起動していない場合は起動して表示．
+ * C-s-s: Claws Mail の表示を切り替える．Claws Mail が起動していない場合は起動して表示．
  * C-s-v: Audacious の再生を停止する．
  * C-s-w: Luakit の表示を切り替える．Luakit が起動していない場合は起動して表示．
  * C-s-x: Audacious のプレイリストを再生する．
@@ -83,7 +83,7 @@ Emacs 使いなので，デフォルトの vi 風から Emacs 風に変更して
 
 ## Tasklist
 
-通常の awesome の tasklist と違い，タグの selected に関係なく全てのプログラムが表示されます．ただし，Emacs, Luakit, Sylpheed, Audacious は表示されません．Luakit, Sylpheed については，2つ目以降のウインドウにはタグが割り合てられます．プログラム名の前には，そのプログラムのタグ番号が表示され，selected なものは明るく，さらにフォーカスのあるものはプログラム名が黄色で表示されます．
+通常の awesome の tasklist と違い，タグの selected に関係なく全てのプログラムが表示されます．ただし，Emacs, Luakit, Claws Mail, Audacious は表示されません．Luakit, Claws Mail については，2つ目以降のウインドウにはタグが割り合てられます．プログラム名の前には，そのプログラムのタグ番号が表示され，selected なものは明るく，さらにフォーカスのあるものはプログラム名が黄色で表示されます．
 
 ## License
 
