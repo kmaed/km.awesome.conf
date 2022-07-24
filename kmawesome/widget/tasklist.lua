@@ -31,9 +31,9 @@ tasklist.filter = {}
 local function gettag(c)
    local tags = c.screen.tags
    local t = 100
-   for i = 6, 15 do
+   for i = 7, 16 do
       if c:tags()[1] == tags[i] then
-         t = i-5
+         t = i-6
       end
    end
    return t
@@ -175,7 +175,8 @@ function tasklist.filter.currenttags(c, screen)
           and t ~= tags[2]
           and t ~= tags[3]
           and t ~= tags[4]
-          and t ~= tags[5] then
+          and t ~= tags[5]
+          and t ~= tags[6]then
             local ctags = c:tags()
             for _, v in ipairs(ctags) do
                 if v == t then
