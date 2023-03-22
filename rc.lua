@@ -87,7 +87,6 @@ end
 local function assignnewtag(c)
    for i = 7, 15 do
       if #tags[i]:clients() == 0 then
-         -- c:tags({tags[i]})
          c:move_to_tag(tags[i])
          break
       end
@@ -128,6 +127,9 @@ local function s2toggle()
       s2tag.selected = true
    else
       awful.tag.viewtoggle(s2tag)
+      if not client.focus then
+         client.focus = tags[1]:clients()[1]
+      end
    end
 end
 
@@ -339,6 +341,13 @@ layout:set_right(right_layout)
 
 mywibar:set_widget(layout)
 
+if screen:count() > 1 then
+   mys2bar = awful.wibar({screen = 2, position = 'top', height=16})
+   local layouts2 = wibox.layout.align.horizontal()
+   layouts2:set_middle(kmawesome.widget.tasklist.new(screen[2], kmawesome.widget.tasklist.filter.alltags))
+   mys2bar:set_widget(layouts2)
+end
+
 local globalkeys = awful.util.table.join(
    awful.key({}, 'XF86AudioLowerVolume', function () awful.spawn('amixer set Master 1-') end),
    awful.key({}, 'XF86AudioMute', function () awful.spawn('amixer set Master toggle') end),
@@ -392,7 +401,7 @@ local globalkeys = awful.util.table.join(
 )
 
 local clientkeys = awful.util.table.join(
-   awful.key({modkey}, 'c', function (c) if c:tags()[1] == s2tag then client.focus = tags[1]:clients()[1] end c:kill() end),
+   awful.key({modkey}, 'c', function (c) if c:tags()[1] == s2tag then client.focus = tags[1]:clients()[1] end c:kill(); if client.focus then client.focus:raise() end end),
    awful.key({modkey, controlkey}, 'space', function(c) c.maximized = false; c.maximized_vertical=false; c.maximized_horizontal=false; c:raise(); client.focus.floating = not client.focus.floating end),
    awful.key({modkey, controlkey}, 'Return', function (c) c:swap(awful.client.getmaster()) end))
 
@@ -448,6 +457,10 @@ end
 
 client.connect_signal("manage",
                   function (c)
+                     if #s2tag:clients() > 1 then
+                        movetos2()
+                     end
+
                      c.size_hints_honor = false
                      c.opacity = 0.5
                      if client.focus == c then c.opacity = 1 end

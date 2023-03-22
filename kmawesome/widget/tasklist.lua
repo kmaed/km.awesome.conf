@@ -17,6 +17,7 @@ local beautiful = require("beautiful")
 local client = require("awful.client")
 local util = require("awful.util")
 local tag = require("awful.tag")
+local screen = screen
 local flex = require("wibox.layout.flex")
 
 module("kmawesome.widget.tasklist")
@@ -30,6 +31,9 @@ tasklist.filter = {}
 
 local function gettag(c)
    local tags = c.screen.tags
+   if screen:count() > 1 and c.screen == screen[2] then
+      return 11
+   end
    local t = 100
    for i = 7, 16 do
       if c:tags()[1] == tags[i] then
@@ -61,9 +65,13 @@ local function tasklist_label(c, args)
     local t = gettag(c)
     if t then
        if t == 10 then t = 0 end
-       name = '[' .. t .. '] ' .. name
+       if t == 11 then
+          name = '[D] ' .. name
+       else
+          name = '[' .. t .. '] ' .. name
+       end
     end
-    if c:tags()[1].selected then
+    if c:tags()[1] and c:tags()[1].selected then
         bg = bg_selected
         if capi.client.focus == c and fg_focus then
            text = text .. "<span color='"..fg_focus.."'>"..name.."</span>"
