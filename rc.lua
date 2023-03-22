@@ -1,5 +1,5 @@
 -- km.awesome.conf: My configuration of awesome window manager
--- Copyright (c) 2012-2022 Kazuki Maeda <kmaeda@kmaeda.net>
+-- Copyright (c) 2012-2023 Kazuki Maeda <kmaeda@kmaeda.net>
 
 local awful = require('awful')
 awful.rules = require('awful.rules')
@@ -72,12 +72,31 @@ local layouts = {
 }
 
 local tags = awful.tag({'Editor', 'Web', 'Mail', 'Music', 'Slack', 'Mattermost', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'}, s, layouts[1])
+if screen:count() > 1 then
+   s2tag = awful.tag.add('Screen2', {screen=screen[2], layout=layouts[3]})
+   s2tag.selected = true
+end
 
 tags[1]:view_only()
 beautiful.master_count = 1
 
 for i = 2, 16 do
    tags[i].master_count = 0
+end
+
+local function assignnewtag(c)
+   for i = 7, 15 do
+      if #tags[i]:clients() == 0 then
+         -- c:tags({tags[i]})
+         c:move_to_tag(tags[i])
+         break
+      end
+   end
+   if not c:tags()[1].selected then
+      c:tags()[1].selected = true
+   end
+   client.focus = c
+   c:raise()
 end
 
 local function setemacsatmaster()
@@ -101,6 +120,14 @@ local function tagtoggle(tagnum)
       tags[tagnum].selected = true
    else
       awful.tag.viewtoggle(tags[tagnum])
+   end
+end
+
+local function s2toggle()
+   if s2tag:clients() == 0 then
+      s2tag.selected = true
+   else
+      awful.tag.viewtoggle(s2tag)
    end
 end
 
@@ -131,6 +158,32 @@ local function movetotag(tagnum)
    end
 end
 
+local function movetos2()
+   if screen:count() > 1 then
+      if client.focus
+         and client.focus:tags()[1] ~= tags[1]
+         and client.focus:tags()[1] ~= tags[2]
+         and client.focus:tags()[1] ~= tags[3]
+         and client.focus:tags()[1] ~= tags[4]
+         and client.focus:tags()[1] ~= tags[5]
+         and client.focus:tags()[1] ~= tags[6] then
+
+         if client.focus:tags()[1] == s2tag then
+            assignnewtag(s2tag:clients()[1])
+         else
+            local focus = client.focus
+            if #s2tag:clients() > 0 then
+               assignnewtag(s2tag:clients()[1])
+            end
+            client.focus = focus
+            client.focus:move_to_tag(s2tag)
+            s2tag.selected = true
+            client.focus = focus
+         end
+      end
+   end
+end
+
 local autorun = {
    xsetb,
    xsetr,
@@ -151,6 +204,7 @@ end
 local waw = awful.screen.focused().workarea.width
 local ew = 615
 if waw < 1700 then ew = 530 end
+if waw > 2400 then ew = 900 end
 for i = 1, 16 do
    tags[i].master_width_factor = ew/waw
 end
@@ -286,9 +340,11 @@ local globalkeys = awful.util.table.join(
 
    awful.key({modkey, shiftkey}, 'n', function () awful.client.swap.byidx(1) end),
    awful.key({modkey, shiftkey}, 'p', function () awful.client.swap.byidx(-1) end),
+   awful.key({modkey, shiftkey}, 'd', function () movetos2() end),
 
    awful.key({modkey, controlkey}, 'b', function () awful.spawn('audtool playlist-advance') end),
    awful.key({modkey, controlkey}, 'c', function () awful.spawn('audtool playlist-clear') end),
+   awful.key({modkey, controlkey}, 'd', function () s2toggle() end),
    awful.key({modkey, controlkey}, 'e', function () tagtoggle(1); launchprogram(editor, 1); setemacsatmaster() end),
    awful.key({modkey, controlkey}, 'm', function () tagtoggle(4); launchprogram(musicplayer, 4); setemacsatmaster() end),
    awful.key({modkey, controlkey}, 'n', function () kmawesome.layout.split.incfact(0.01) end),
@@ -304,7 +360,7 @@ local globalkeys = awful.util.table.join(
 )
 
 local clientkeys = awful.util.table.join(
-   awful.key({modkey}, 'c', function (c) c:kill() end),
+   awful.key({modkey}, 'c', function (c) if c:tags()[1] == s2tag then client.focus = tags[1]:clients()[1] end c:kill() end),
    awful.key({modkey, controlkey}, 'space', function(c) c.maximized = false; c.maximized_vertical=false; c.maximized_horizontal=false; c:raise(); client.focus.floating = not client.focus.floating end),
    awful.key({modkey, controlkey}, 'Return', function (c) c:swap(awful.client.getmaster()) end))
 
@@ -352,18 +408,10 @@ awful.rules.rules = {
      properties = { floating = true } },
 }
 
-local function assignnewtag(c)
-   for i = 7, 15 do
-      if #tags[i]:clients() == 0 then
-         c:tags({tags[i]})
-         break
-      end
-   end
-   if not c:tags()[1].selected then
-      c:tags()[1].selected = true
-   end
-   client.focus = c
-   c:raise()
+if screen:count() > 1 then
+   awful.rules.rules[#awful.rules.rules+1] =
+      { rule = { class = "Evince" },
+        properties = { tag = s2tag } }
 end
 
 client.connect_signal("manage",
@@ -371,6 +419,7 @@ client.connect_signal("manage",
                      c.size_hints_honor = false
                      c.opacity = 0.5
                      if client.focus == c then c.opacity = 1 end
+                     if c:tags()[1] == s2tag then c.opacity = 1 end
 
                      if c:tags()[1] == tags[16] then
                         assignnewtag(c)
@@ -399,10 +448,11 @@ client.connect_signal("focus",
                      c.border_color = beautiful.border_focus
                      c.opacity = 1
                   end)
+
 client.connect_signal("unfocus",
                   function(c)
                      c.border_color = beautiful.border_normal
-                     if not c.floating then
+                     if not c.floating and c:tags()[1] ~= s2tag then
                         c.opacity = 0.5
                      end
                   end)
