@@ -457,7 +457,7 @@ end
 
 client.connect_signal("manage",
                   function (c)
-                     if #s2tag:clients() > 1 then
+                     if s2tag and #s2tag:clients() > 1 then
                         movetos2()
                      end
 
