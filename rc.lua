@@ -143,6 +143,12 @@ local function tagviewonly(tagnum)
    end
 end
 
+local function focuss2()
+   if #s2tag:clients() > 0 then
+      client.focus = s2tag:clients()[1]
+   end
+end
+
 local function movetotag(tagnum)
    if client.focus
       and client.focus:tags()[1] ~= tags[1]
@@ -349,6 +355,7 @@ local globalkeys = awful.util.table.join(
    awful.key({modkey, controlkey}, 'o', function () awful.spawn(sleepcommand) end),
    awful.key({}, 'Cancel', function () awful.spawn(sleepcommand) end),
 
+   awful.key({modkey}, 'd', function () focuss2(); if client.focus then client.focus:raise() end end),
    awful.key({modkey}, 'e', function () launchprogram(editor, 1); tags[1].selected = true; setemacsatmaster(); if tags[1]:clients()[1] then client.focus = tags[1]:clients()[1] end end),
    awful.key({modkey}, 'f', function () awful.spawn(firefox) end),
    awful.key({modkey}, 'm', function () launchprogram(musicplayer, 4); tagviewonly(4); setemacsatmaster() end),
