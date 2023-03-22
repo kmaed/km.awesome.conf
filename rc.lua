@@ -123,12 +123,14 @@ local function tagtoggle(tagnum)
 end
 
 local function s2toggle()
-   if s2tag:clients() == 0 then
-      s2tag.selected = true
-   else
-      awful.tag.viewtoggle(s2tag)
-      if not client.focus then
-         client.focus = tags[1]:clients()[1]
+   if s2tag then
+      if s2tag:clients() == 0 then
+         s2tag.selected = true
+      else
+         awful.tag.viewtoggle(s2tag)
+         if not client.focus then
+            client.focus = tags[1]:clients()[1]
+         end
       end
    end
 end
@@ -146,7 +148,7 @@ local function tagviewonly(tagnum)
 end
 
 local function focuss2()
-   if #s2tag:clients() > 0 then
+   if s2tag and #s2tag:clients() > 0 then
       client.focus = s2tag:clients()[1]
    end
 end
