@@ -184,6 +184,31 @@ local function movetos2()
    end
 end
 
+-- cf. https://stackoverflow.com/questions/61629221/is-there-something-like-awful-client-focus-global-byidx
+function next_global(i, sel, stacked)
+   sel = sel or client.focus
+   if not sel then return end
+   local cls = awful.client.visible(nil, stacked)
+   local fcls = {}
+   for _, c in ipairs(cls) do
+      if awful.client.focus.filter(c) or c == sel then
+         table.insert(fcls, c)
+      end
+   end
+   cls = fcls
+   for idx, c in ipairs(cls) do
+      if c == sel then
+         return cls[gears.math.cycle(#cls, idx + i)]
+      end
+   end
+end
+function focus_byidx_global(i, c)
+   local target = next_global(i, c)
+   if target then
+      target:emit_signal("request::activate", "client.focus.byidx", {raise=true})
+   end
+end
+
 local autorun = {
    xsetb,
    xsetr,
@@ -327,8 +352,8 @@ local globalkeys = awful.util.table.join(
    awful.key({modkey}, 'e', function () launchprogram(editor, 1); tags[1].selected = true; setemacsatmaster(); if tags[1]:clients()[1] then client.focus = tags[1]:clients()[1] end end),
    awful.key({modkey}, 'f', function () awful.spawn(firefox) end),
    awful.key({modkey}, 'm', function () launchprogram(musicplayer, 4); tagviewonly(4); setemacsatmaster() end),
-   awful.key({modkey}, 'n', function () awful.client.focus.byidx(1); if client.focus then client.focus:raise() end end),
-   awful.key({modkey}, 'p', function () awful.client.focus.byidx(-1); if client.focus then client.focus:raise() end end),
+   awful.key({modkey}, 'n', function () focus_byidx_global(1); if client.focus then client.focus:raise() end end),
+   awful.key({modkey}, 'p', function () focus_byidx_global(-1); if client.focus then client.focus:raise() end end),
    awful.key({modkey}, 's', function () launchprogram(mua, 3); tagviewonly(3); setemacsatmaster() end),
    awful.key({modkey, shiftkey}, 's', function () launchprogram(slack, 5); tagviewonly(5); setemacsatmaster() end),
    awful.key({modkey, shiftkey}, 'm', function () launchprogram(mattermost, 6); tagviewonly(6); setemacsatmaster() end),
