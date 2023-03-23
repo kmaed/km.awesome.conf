@@ -459,10 +459,6 @@ end
 
 client.connect_signal("manage",
                   function (c)
-                     if s2tag and #s2tag:clients() > 1 then
-                        movetos2()
-                     end
-
                      c.size_hints_honor = false
                      c.opacity = 0.5
                      if client.focus == c then c.opacity = 1 end
