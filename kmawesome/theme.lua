@@ -12,7 +12,7 @@ theme.bg_selected  = "#555753"
 theme.bg_focus     = "#555753"
 theme.bg_urgent    = "#3F3F3F"
 
-theme.border_width  = "0"
+theme.border_width  = "3"
 theme.border_normal = "#3f403d"
 theme.border_focus  = "#7aa3cc"
 theme.border_marked = "#CC9393"

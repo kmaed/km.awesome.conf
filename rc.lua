@@ -504,4 +504,4 @@ client.connect_signal("unfocus",
                      end
                   end)
 
-awful.spawn(xcompmgr)
+-- awful.spawn(xcompmgr)
