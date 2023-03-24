@@ -322,7 +322,7 @@ if os.execute('sensors') == 0 then
    gears.timer.start_new(10, function() mysensors:set_markup(" " .. sensors_status() .. " "); return true end)
 end
 
-local mywibar = awful.wibar({position = 'top', height=16})
+local mywibar = awful.wibar({position = 'top', height=32})
 
 local left_layout = wibox.layout.fixed.horizontal()
 left_layout:add(cpuwidget)
@@ -342,7 +342,7 @@ layout:set_right(right_layout)
 mywibar:set_widget(layout)
 
 if screen:count() > 1 then
-   mys2bar = awful.wibar({screen = 2, position = 'top', height=16})
+   mys2bar = awful.wibar({screen = 2, position = 'top', height=32})
    local layouts2 = wibox.layout.align.horizontal()
    layouts2:set_middle(kmawesome.widget.tasklist.new(screen[2], kmawesome.widget.tasklist.filter.alltags))
    mys2bar:set_widget(layouts2)
