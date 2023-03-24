@@ -1,7 +1,7 @@
 local theme = {}
 theme.wallpaper_cmd = { "" }
 
-theme.font      = "M+ 1c bold 8"
+theme.font      = "M+ 1c bold 16"
 
 theme.fg_normal    = "#838383"
 theme.fg_selected  = "#d3d7cf"

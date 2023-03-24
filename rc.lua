@@ -182,9 +182,6 @@ local function movetos2()
             assignnewtag(s2tag:clients()[1])
          else
             local focus = client.focus
-            if #s2tag:clients() > 0 then
-               assignnewtag(s2tag:clients()[1])
-            end
             client.focus = focus
             client.focus:move_to_tag(s2tag)
             s2tag.selected = true
@@ -240,6 +237,7 @@ local waw = awful.screen.focused().workarea.width
 local ew = 615
 if waw < 1700 then ew = 530 end
 if waw > 2400 then ew = 900 end
+if waw > 3200 then ew = 1300 end
 for i = 1, 16 do
    tags[i].master_width_factor = ew/waw
 end
