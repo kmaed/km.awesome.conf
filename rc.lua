@@ -84,6 +84,10 @@ for i = 2, 16 do
    tags[i].master_count = 0
 end
 
+if s2tag then
+   s2tag.master_count = 0
+end
+
 local function assignnewtag(c)
    for i = 7, 15 do
       if #tags[i]:clients() == 0 then
@@ -179,7 +183,7 @@ local function movetos2()
          and client.focus:tags()[1] ~= tags[6] then
 
          if client.focus:tags()[1] == s2tag then
-            assignnewtag(s2tag:clients()[1])
+            assignnewtag(client.focus)
          else
             local focus = client.focus
             client.focus = focus
