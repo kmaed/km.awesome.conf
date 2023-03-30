@@ -4,6 +4,7 @@ local layout = require("awful.layout")
 local math = math
 
 local splitfact = 0.66
+local borderwidth = 3 -- set same as theme.border_width in theme.lua
 
 module("kmawesome.layout.split")
 
@@ -67,14 +68,14 @@ local function arrange_entry(param, dir)
    local mwa = {
       x = wa.x,
       y = wa.y,
-      width = wa.width,
-      height = wa.height
+      width = wa.width - borderwidth*2,
+      height = wa.height - borderwidth*2
    }
    local owa = {
       x = wa.x,
       y = wa.y,
-      width = wa.width,
-      height = wa.height
+      width = wa.width - borderwidth*2,
+      height = wa.height - borderwidth*2
    }
 
    if nmaster > 0 then
